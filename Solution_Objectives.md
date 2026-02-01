@@ -189,7 +189,7 @@ Các hệ thống truyền thống phát sinh:
 
 **DR4.1**: Smart contracts PHẢI loại bỏ các dịch vụ ký quỹ bên thứ ba đáng tin cậy, giảm phí trung gian về 0.
 
-**DR4.2**: Hệ thống PHẢI triển khai trên AVAX Subnet hoặc ndachain với PoA consensus để đạt chi phí giao dịch < $0.01, làm cho cho thuê vi mô khả thi về mặt kinh tế.
+**DR4.2**: Hệ thống PHẢI triển khai trên NDAChain (hạ tầng DID quốc gia với PoA consensus) để đạt chi phí giao dịch < $0.01, làm cho cho thuê vi mô khả thi về mặt kinh tế. Hiện testing trên AVAX Fuji (temporary).
 
 **DR4.3**: Tự động hóa PHẢI giảm yêu cầu lao động từ 55-95 phút mỗi giao dịch xuống < 5 phút thời gian admin.
 
@@ -199,7 +199,7 @@ Các hệ thống truyền thống phát sinh:
 
 | Chỉ số | Mục tiêu | Phương pháp Đo lường |
 |--------|----------|----------------------|
-| **SM4.1**: Chi phí gas trung bình mỗi chu kỳ thuê | < $0.01 (AVAX Subnet/ndachain PoA) | Đo lường chi phí giao dịch on-chain |
+| **SM4.1**: Chi phí gas trung bình mỗi chu kỳ thuê | < $0.01 (NDAChain PoA) | Đo lường chi phí giao dịch on-chain |
 | **SM4.2**: Tổng giảm chi phí vs. truyền thống | ≥ 50% | Phân tích chi phí so sánh (mô hình TCO) |
 | **SM4.3**: Lao động admin mỗi giao dịch | < 5 phút | Nghiên cứu theo dõi thời gian của can thiệp thủ công |
 | **SM4.4**: Hiệu quả vốn | Tiền có sẵn ngay lập tức khi thanh toán | Ký quỹ smart contract vs. giữ 5 ngày truyền thống |
@@ -207,7 +207,7 @@ Các hệ thống truyền thống phát sinh:
 
 #### 2.4.5 Triển khai Kỹ thuật
 
-- **Triển khai Subnet với PoA**: AVAX Subnet hoặc ndachain với Proof of Authority cho giao dịch chi phí thấp, thông lượng cao, và tuỳ biến cao
+- **Triển khai trên NDAChain**: NDAChain với Proof of Authority cho giao dịch chi phí thấp, thông lượng cao (target platform)
 - **Tối ưu hóa Gas**: Thực hành tốt nhất Solidity, tối thiểu hóa lưu trữ, hoạt động hàng loạt
 - **Tích hợp DeFi** (tương lai): Giao thức cho vay Aave để tạo lãi tiền cọc
 - **Mô hình Kinh tế**: Cấu trúc phí dựa trên token với quản trị DAO tiềm năng
@@ -426,7 +426,7 @@ Kiến trúc VinaLib hỗ trợ các biến thể này thông qua các quy tắc
 ### 7.2 Phụ thuộc Thành công
 
 Đạt được các mục tiêu phụ thuộc vào:
-- **Kỹ thuật**: Sự ổn định AVAX Subnet/ndachain, tính khả dụng dịch vụ Chainlink, uptime cổng IPFS
+- **Kỹ thuật**: Sự ổn định NDAChain platform, tính khả dụng dịch vụ Chainlink, uptime cổng IPFS
 - **Kinh tế**: Sự ổn định giá token AVAX/gas token (ảnh hưởng chi phí gas theo fiat)
 - **Xã hội**: Khối lượng người dùng tới hạn (hiệu ứng mạng cho hệ thống uy tín)
 - **Pháp lý**: Sự chấp nhận quy định của smart contracts như các thỏa thuận có thể thực thi
@@ -439,7 +439,7 @@ Kiến trúc VinaLib hỗ trợ các biến thể này thông qua các quy tắc
 - ✅ O1: Tokenization NFT (BookAsset ERC-721/4907)
 - ✅ O2: Tự động hóa ký quỹ cơ bản (BookRental)
 - ✅ O3: Phát ra sự kiện cho audit trail
-- 🔄 O4: Triển khai testnet trên AVAX Fuji/ndachain testnet
+- 🔄 O4: Triển khai testnet trên AVAX Fuji (temporary, chờ NDAChain mở public)
 
 ### Giai đoạn 2: Tự động hóa Nâng cao (Q2 2026)
 - ⏳ O2: PolicyEngine với tích hợp điểm tin cậy
@@ -449,7 +449,7 @@ Kiến trúc VinaLib hỗ trợ các biến thể này thông qua các quy tắc
 ### Giai đoạn 3: Tích hợp Thế giới Thực (Q3 2026)
 - ⏳ O3: Tích hợp khóa thông minh IoT (thiết bị Tuya thực)
 - ⏳ O7: Triển khai meta-transaction cho UX không tốn gas
-- ⏳ Triển khai mainnet trên AVAX Subnet hoặc ndachain với PoA consensus
+- ⏳ Triển khai mainnet trên NDAChain (target platform)
 
 ### Giai đoạn 4: Đánh giá và Lặp lại (Q4 2026)
 - ⏳ Nghiên cứu người dùng toàn diện
