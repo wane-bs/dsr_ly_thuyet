@@ -301,16 +301,23 @@ User (👤)        Smart Contract (⛓️)      Chainlink (🔮)        IPFS (�
 | **Phase 3** | Real IPFS | 📋 Planned | Migrate sang Pinata/Web3.Storage |
 | **Phase 3** | Real Tuya | 📋 Planned | Connect với Tuya Cloud API thật |
 | **Phase 4** | Testnet Deploy | 📋 Planned | AVAX Fuji Testnet hoặc ndachain testnet |
-| **Phase 5** | Mainnet Deploy | 📋 Planned | AVAX Subnet hoặc ndachain với PoA consensus |
+| **Phase 5** | Mainnet Deploy | 📋 Planned | NDAChain (Hạ tầng DID quốc gia) với PoA consensus |
 
 ---
 
-## 📎 Tài liệu Liên quan
+## Tài liệu Liên quan trong Bộ Khái niệm
 
-- [CHÚ_THÍCH_SƠ_ĐỒ.md](../CHÚ_THÍCH_SƠ_ĐỒ.md) - Giải thích chi tiết các sơ đồ kiến trúc
-- [DIAGRAMS.md](../DIAGRAMS.md) - Tổng hợp tất cả Mermaid diagrams
-- [README.md](../README.md) - Tổng quan dự án VinaLib
+Các tài liệu khác trong bộ này:
+- [START_HERE_Ly_thuyet_nen_tang.md](./START_HERE_Ly_thuyet_nen_tang.md) - Khởi điểm cho người mới
+- [1-IPFS.md](./1-IPFS.md) - Content-addressed storage
+- [2-Smart-Contracts-Co-ban.md](./2-Smart-Contracts-Co-ban.md) - Khái niệm Smart Contracts cơ bản
+- [3-Smart-Contracts-Nang-cao.md](./3-Smart-Contracts-Nang-cao.md) - Patterns và Standards nâng cao
+- [4-Chainlink.md](./4-Chainlink.md) - Oracle và Automation
+- [5-IoT.md](./5-IoT.md) - IoT Integration
+
+---
 
 ---
 
 *Cập nhật lần cuối: 2026-01-31*
+```
