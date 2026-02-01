@@ -47,46 +47,46 @@ VinaLib đại diện cho một artifact design science—cụ thể là một *
 ### 2.2 Quy trình DSR trong VinaLib
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                  QUY TRÌNH PHƯƠNG PHÁP LUẬN DSR             │
-└─────────────────────────────────────────────────────────────┘
++-------------------------------------------------------------+
+¦                  QUY TRÌNH PHƯƠNG PHÁP LUẬN DSR             ¦
++-------------------------------------------------------------+
 
 1. XÁC ĐỊNH VẤN ĐỀ
-   ├─ Thách thức giải quyết tranh chấp tài sản
-   ├─ Sự kém hiệu quả của xử lý thủ công
-   └─ Tính mờ đục trong quản lý vòng đời tài sản
-          │
-          ▼
+   +- Thách thức giải quyết tranh chấp tài sản
+   +- Sự kém hiệu quả của xử lý thủ công
+   +- Tính mờ đục trong quản lý vòng đời tài sản
+          ¦
+          ↓
 2. MỤC TIÊU GIẢI PHÁP
-   ├─ Tính minh bạch quyền sở hữu qua blockchain
-   ├─ Tự động hóa quy trình qua smart contracts
-   ├─ Audit trail bất biến
-   └─ Giảm chi phí và rủi ro
-          │
-          ▼
+   +- Tính minh bạch quyền sở hữu qua blockchain
+   +- Tự động hóa quy trình qua smart contracts
+   +- Audit trail bất biến
+   +- Giảm chi phí và rủi ro
+          ¦
+          ↓
 3. THIẾT KẾ & PHÁT TRIỂN
-   ├─ Tầng Blockchain (Smart Contracts)
-   ├─ Tầng Lưu trữ (IPFS)
-   ├─ Tầng Oracle (Chainlink)
-   └─ Tích hợp Vật lý (IoT)
-          │
-          ▼
+   +- Tầng Blockchain (Smart Contracts)
+   +- Tầng Lưu trữ (IPFS)
+   +- Tầng Oracle (Chainlink)
+   +- Tích hợp Vật lý (IoT)
+          ¦
+          ↓
 4. MINH CHỨNG
-   ├─ Triển khai nguyên mẫu (Hardhat local)
-   ├─ Triển khai testnet (Sepolia, Mumbai)
-   └─ Các kịch bản use case
-          │
-          ▼
+   +- Triển khai nguyên mẫu (Hardhat local)
+   +- Triển khai testnet (AVAX Fuji, NDAChain Testnet)
+   +- Các kịch bản use case
+          ¦
+          ↓
 5. ĐÁNH GIÁ
-   ├─ Các chỉ số định lượng (TPS, chi phí, độ trễ)
-   ├─ Đánh giá định tính (khả năng sử dụng, lòng tin)
-   └─ Phân tích so sánh (truyền thống vs DApp)
-          │
-          ▼
+   +- Các chỉ số định lượng (TPS, chi phí, độ trễ)
+   +- Đánh giá định tính (khả năng sử dụng, lòng tin)
+   +- Phân tích so sánh (truyền thống vs DApp)
+          ¦
+          ↓
 6. TRUYỀN THÔNG
-   ├─ Tài liệu kỹ thuật (repository này)
-   ├─ Xuất bản học thuật (đã lên kế hoạch)
-   └─ Mã nguồn mở
+   +- Tài liệu kỹ thuật (repository này)
+   +- Xuất bản học thuật (đã lên kế hoạch)
+   +- Mã nguồn mở
 ```
 
 ### 2.3 Mô tả Artifact
@@ -101,7 +101,7 @@ VinaLib đại diện cho một artifact design science—cụ thể là một *
 - **Nền kinh tế Token**: SuChinToken (ERC-20) cho thanh toán
 
 **Stack Công nghệ**:
-- Blockchain: AVAX Subnet hoặc ndachain với PoA consensus
+- Blockchain: **NDAChain** (Hạ tầng DID quốc gia) với PoA consensus
 - Ngôn ngữ Smart Contract: Solidity
 - Framework Phát triển: Hardhat
 - Frontend: React/Web3.js
@@ -118,12 +118,12 @@ VinaLib đại diện cho một artifact design science—cụ thể là một *
 |----------|---------------|----------|
 | [Đặc tả Vấn đề](./Problem_Statement.md) | 1. Xác định Vấn đề | Trình bày các thách thức trong quản lý tài sản truyền thống |
 | [Mục tiêu Giải pháp](./Solution_Objectives.md) | 2. Định nghĩa Mục tiêu | Xác định các mục tiêu đo lường được cho DApp |
-| [Kiến trúc Tổng quan](./0.%20Kiến%20trúc%20Tổng%20quan.md) | 3. Thiết kế & Phát triển | Kiến trúc hệ thống và thiết kế kỹ thuật |
-| [IPFS](./1.%20IPFS.md) | 3. Thiết kế & Phát triển | Thiết kế tầng lưu trữ |
-| [Smart Contracts (Cơ bản)](./2.%20Smart%20Contracts%20(Cơ%20bản).md) | 3. Thiết kế & Phát triển | Logic contract cốt lõi |
-| [Smart Contracts (Nâng cao)](./3.%20Smart%20Contracts%20(Nâng%20cao).md) | 3. Thiết kế & Phát triển | Các mẫu và tiêu chuẩn nâng cao |
-| [Chainlink](./4.%20Chainlink.md) | 3. Thiết kế & Phát triển | Thiết kế tích hợp oracle |
-| [IoT](./5.%20IoT.md) | 3. Thiết kế & Phát triển | Tích hợp thế giới vật lý |
+| [Kiến trúc Tổng quan](./0-Kien-truc-Tong-quan.md) | 3. Thiết kế & Phát triển | Kiến trúc hệ thống và thiết kế kỹ thuật |
+| [IPFS](./1-IPFS.md) | 3. Thiết kế & Phát triển | Thiết kế tầng lưu trữ |
+| [Smart Contracts (Cơ bản)](./2-Smart-Contracts-Co-ban.md) | 3. Thiết kế & Phát triển | Logic contract cốt lõi |
+| [Smart Contracts (Nâng cao)](./3-Smart-Contracts-Nang-cao.md) | 3. Thiết kế & Phát triển | Các mẫu và tiêu chuẩn nâng cao |
+| [Chainlink](./4-Chainlink.md) | 3. Thiết kế & Phát triển | Thiết kế tích hợp oracle |
+| [IoT](./5-IoT.md) | 3. Thiết kế & Phát triển | Tích hợp thế giới vật lý |
 | [Kết quả Đánh giá](./Evaluation_Results.md) | 5. Đánh giá | Đánh giá và xác thực thực nghiệm |
 
 ### 3.2 Lộ trình Đọc theo Vai trò
@@ -176,7 +176,7 @@ VinaLib đại diện cho một artifact design science—cụ thể là một *
 **Tác động Thực tiễn**:
 - Giải quyết các sự kém hiệu quả thực tế trong quản lý tài sản
 - Có thể tổng quát hóa ra ngoài cho thuê sách cho nhiều loại tài sản khác
-- Cung cấp giải pháp hiệu quả về chi phí (triển khai Layer 2)
+- Cung cấp giải pháp hiệu quả về chi phí (triển khai Layer 2 / NDAChain PoA)
 - Tích hợp cơ chế lòng tin người dùng (PolicyEngine, điểm uy tín)
 
 **Đóng góp cho Cơ sở Tri thức**:
@@ -195,7 +195,7 @@ Dự án DSR này giải quyết các câu hỏi nghiên cứu sau:
 
 **RQ2**: Smart contracts có thể tự động hóa các quy trình ra quyết định (phê duyệt, ký quỹ, thanh toán) ở mức độ nào trong khi vẫn duy trì tính bảo mật và công bằng?
 
-**RQ3**: Các đánh đổi về mặt kỹ thuật và kinh tế khi triển khai DApp quản lý tài sản trên mạng blockchain Layer 1 so với Layer 2 là gì?
+**RQ3**: Các đánh đổi về mặt kỹ thuật và kinh tế khi triển khai DApp quản lý tài sản trên mạng blockchain Layer 1 so với Layer 2 / PoA network là gì?
 
 **RQ4**: Mạng oracle và tích hợp IoT có thể thu hẹp khoảng cách giữa logic on-chain và trạng thái tài sản trong thế giới thực như thế nào?
 
@@ -219,7 +219,7 @@ VinaLib đóng góp một **kiến trúc tích hợp mới lạ** kết hợp:
 ### Cấp độ 2: Cải tiến (Nâng cao Artifacts Hiện có)
 - Cải tiến so với hệ thống ký quỹ truyền thống thông qua tự động hóa smart contract
 - Nâng cao NFT tĩnh với khả năng cho thuê động
-- Tối ưu hóa chi phí gas thông qua triển khai Layer 2
+- Tối ưu hóa chi phí gas thông qua triển khai trên NDAChain PoA
 
 ### Cấp độ 3: Exaptation (Áp dụng vào Bối cảnh Mới)
 - Áp dụng tokenization tài sản blockchain vào miền quản lý thư viện
@@ -233,12 +233,12 @@ Artifact sẽ được xác thực thông qua nhiều phương pháp:
 
 ### 7.1 Kiểm thử Chức năng
 - Unit tests cho smart contracts (bộ test Hardhat)
-- Integration testing trên testnets (AVAX Fuji, ndachain testnet)
+- Integration testing trên testnets (AVAX Fuji, NDAChain testnet)
 - Kiểm toán bảo mật (phân tích tĩnh + đánh giá thủ công)
 
 ### 7.2 Đánh giá Hiệu suất
 - Đo lường thông lượng và độ trễ giao dịch
-- Phân tích chi phí gas (Layer 1 vs Layer 2)
+- Phân tích chi phí gas (Layer 1 vs AVAX Subnet vs NDAChain)
 - Kiểm thử khả năng mở rộng dưới tải
 
 ### 7.3 Nghiên cứu Người dùng
