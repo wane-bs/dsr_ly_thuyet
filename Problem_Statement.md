@@ -138,7 +138,7 @@ Vấn đề: Không có bản ghi bất biến về tình trạng tại T0
 ```
 Kịch bản: Sách được trả muộn 7 ngày
 Quy trình Thủ công:
-1. Nhân viên nhận thấy trả muộn ✓
+1. Nhân viên nhận thấy trả muộn →
 2. Kiểm tra thỏa thuận cho thuê về cấu trúc phí → (có khả năng hiểu nhầm)
 3. Tính toán: 7 ngày × $2/ngày = $14 → (rủi ro lỗi số học)
 4. Nhập vào hệ thống thanh toán → (rủi ro lỗi nhập dữ liệu)
@@ -186,16 +186,16 @@ Hồ sơ Vòng đời Lý tưởng:
 - Báo cáo sự cố (hư hỏng, mất, thu hồi)
 - Sự kiện bảo trì (đóng lại, làm sạch)
 - Đánh giá tình trạng theo thời gian
-- Xử lý cuối cùng (rút, quyên tặng, bán)
+- Xử lý cuối cùng (rút, quyên góp, bán)
 
 Thực tế Hệ thống Truyền thống:
-- Ngày mua ✓ (đôi khi)
-- Tình trạng ban đầu ✗ (hiếm khi được tài liệu hóa)
-- Lịch sử cho thuê ✓ (chỉ tổng hợp: số lần "cho mượn")
-- Báo cáo sự cố ⚠ (không nhất quán, ghi chú tự do)
-- Bảo trì ✗ (không được tài liệu hóa)
-- Xu hướng tình trạng ✗ (không có dữ liệu)
-- Xử lý ✓ (chỉ hành động cuối cùng)
+- Ngày mua ? (đôi khi)
+- Tình trạng ban đầu ? (hiếm khi được tài liệu hóa)
+- Lịch sử cho thuê ? (chỉ tổng hợp: số lần "cho mượn")
+- Báo cáo sự cố ? (không nhất quán, ghi chú tự do)
+- Bảo trì ? (không được tài liệu hóa)
+- Xu hướng tình trạng ? (không có dữ liệu)
+- Xử lý ? (chỉ hành động cuối cùng)
 ```
 
 ### 4.3 Thiếu hụt Audit Trail
@@ -233,7 +233,7 @@ Các hệ thống truyền thống đối mặt:
 
 **Sự cố Gần đây**:
 - 2023: Vi phạm hệ thống quản lý thư viện để lộ 2.3M hồ sơ người dùng
-- 2022: Tấn công ransomware nền tảng cho thuê thiết bị gây ngừng hoạt động 14 ngày
+- 2022: Tấn công ransomware nền tảng cho thuê thiết bị gây ngưng hoạt động 14 ngày
 - 2021: Nhân viên công ty quản lý bất động sản biển thủ ($1.8M trong 3 năm)
 
 ### 5.3 Cấu trúc Chi phí và Kém hiệu quả Kinh tế
@@ -267,26 +267,26 @@ Tổng Chi phí Sở hữu (TCO) cho hệ thống cho thuê 10,000 tài sản:
 ### 6.1 Chủ sở hữu Tài sản (Người cho thuê)
 
 **Điểm Đau**:
-- ❌ Rủi ro không thanh toán hoặc hư hỏng tài sản mà không có biện pháp khắc phục
-- ❌ Phí giao dịch cao làm giảm biên lợi nhuận
-- ❌ Khả năng hiển thị hạn chế về hiệu suất tài sản và hành vi người thuê
-- ❌ Sử dụng vốn kém hiệu quả (tiền bị khóa trong ký quỹ)
+- 🔴 Rủi ro không thanh toán hoặc hư hỏng tài sản mà không có biện pháp khắc phục
+- 🔴 Phí giao dịch cao làm giảm biên lợi nhuận
+- 🔴 Khả năng hiển thị hạn chế về hiệu suất tài sản và hành vi người thuê
+- 🔴 Sử dụng vốn kém hiệu quả (tiền bị khóa trong ký quỹ)
 
 ### 6.2 Người sử dụng Tài sản (Người thuê)
 
 **Điểm Đau**:
-- ❌ Quy trình phê duyệt mờ đục (từ chối tùy tiện)
-- ❌ Giữ tiền đặt cọc không chính đáng và tranh chấp phí
-- ❌ Thiếu cơ chế lòng tin (người thuê tốt không thể tự phân biệt)
-- ❌ Mối quan ngại về quyền riêng tư do thu thập dữ liệu quá mức
+- 🔴 Quy trình phê duyệt mờ đục (từ chối tùy tiện)
+- 🔴 Giữ tiền đặt cọc không chính đáng và tranh chấp phí
+- 🔴 Thiếu cơ chế lòng tin (người thuê tốt không thể tự phân biệt)
+- 🔴 Mối quan ngại về quyền riêng tư do thu thập dữ liệu quá mức
 
 ### 6.3 Người vận hành Nền tảng (Quản trị viên)
 
 **Điểm Đau**:
-- ❌ Chi phí vận hành cao (gánh nặng xử lý thủ công)
-- ❌ Rủi ro trách nhiệm pháp lý (trách nhiệm người giữ ký quỹ)
-- ❌ Hạn chế khả năng mở rộng (chi phí tăng tuyến tính theo khối lượng)
-- ❌ Sự phức tạp tuân thủ quy định
+- 🔴 Chi phí vận hành cao (gánh nặng xử lý thủ công)
+- 🔴 Rủi ro trách nhiệm pháp lý (trách nhiệm người giữ ký quỹ)
+- 🔴 Hạn chế khả năng mở rộng (chi phí tăng tuyến tính theo khối lượng)
+- 🔴 Sự phức tạp tuân thủ quy định
 
 ---
 
@@ -298,11 +298,11 @@ Mặc dù VinaLib tập trung vào cho thuê sách thư viện, các vấn đề
 
 | Loại Tài sản | Tranh chấp Quyền sở hữu | Xử lý Thủ công | Mờ đục Vòng đời |
 |--------------|-------------------------|----------------|-----------------|
-| **Cho thuê Thiết bị** (công cụ, camera) | ✓ Yêu cầu bồi thường hư hỏng | ✓ Ký quỹ tiền cọc | ✓ Lịch sử sử dụng |
-| **Bất động sản** (cho thuê ngắn hạn) | ✓ Hư hỏng tài sản | ✓ Tiền đặt cọc bảo đảm | ✓ Hồ sơ bảo trì |
-| **Chia sẻ Xe** (cho thuê ô tô, xe đạp) | ✓ Trách nhiệm tai nạn | ✓ Xử lý thanh toán | ✓ Theo dõi số km/hao mòn |
-| **Đồ sưu tầm** (nghệ thuật, hiện vật) | ✓ Xác minh nguồn gốc | ✓ Chi phí xác thực | ✓ Lịch sử triển lãm |
-| **Tài sản Số** (giấy phép phần mềm, media) | ✓ Tuân thủ giấy phép | ✓ Quản lý gói đăng ký | ✓ Phân tích sử dụng |
+| **Cho thuê Thiết bị** (công cụ, camera) | 🔴 Yêu cầu bồi thường hư hỏng | 🔴 Ký quỹ tiền cọc | 🔴 Lịch sử sử dụng |
+| **Bất động sản** (cho thuê ngắn hạn) | 🔴 Hư hỏng tài sản | 🔴 Tiền đặt cọc bảo đảm | 🔴 Hồ sơ bảo trì |
+| **Chia sẻ Xe** (cho thuê ô tô, xe đạp) | 🔴 Trách nhiệm tai nạn | 🔴 Xử lý thanh toán | 🔴 Theo dõi số km/hao mòn |
+| **Đồ sưu tầm** (nghệ thuật, hiện vật) | 🔴 Xác minh nguồn gốc | 🔴 Chi phí xác thực | 🔴 Lịch sử triển lãm |
+| **Tài sản Số** (giấy phép phần mềm, media) | 🔴 Tuân thủ giấy phép | 🔴 Quản lý gói đăng ký | 🔴 Phân tích sử dụng |
 
 ### 7.2 Các Trừu tượng Cốt lõi
 
@@ -344,8 +344,8 @@ Các trừu tượng này ánh xạ trực tiếp đến các khả năng blockc
 - Blockchain cho lòng tin và minh bạch
 - Smart contracts cho ký quỹ tự động và thực thi chính sách
 - Oracles cho tích hợp dữ liệu thế giới thực
-- IoT  cho xác minh tài sản vật lý
-- Layer 2 cho hoạt động hiệu quả chi phí
+- IoT cho xác minh tài sản vật lý
+- **NDAChain** (Layer 2 / PoA) cho hoạt động hiệu quả chi phí
 - Tiêu chuẩn cụ thể cho cho thuê (ERC-4907)
 
 Khoảng trống này thúc đẩy thiết kế và phát triển VinaLib như một artifact DSR.
