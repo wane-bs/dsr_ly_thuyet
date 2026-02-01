@@ -3,7 +3,7 @@ layout: default
 title: Smart Contracts (Cơ bản)
 ---
 
-# Smart Contracts Cơ bản: Nguyên lý và Ứng dụng trong VinaLibh
+# Smart Contracts Cơ bản: Nguyên lý và Ứng dụng trong VinaLib
 ## Tài liệu Giới thiệu Khái niệm và Ứng dụng
 
 > 📍 **Vị trí trong bộ tài liệu**: 2/5 - Logic cốt lõi (Cơ bản)  
@@ -48,7 +48,7 @@ File này sẽ chuyển từ ẩn dụ sang **thực tế kỹ thuật**: Solidi
 
 | Yếu tố | Lựa chọn VinaLib | Lý do |
 |--------|-----------------|-------|
-| **Blockchain** | AVAX Subnet hoặc ndachain (EVM-compatible) | Tính linh hoạt cao, PoA consensus phù hợp, gas rẻ |
+| **Platform** | **NDAChain** (Testnet: AVAX Fuji) | Tương thích 100% EVM, dev tools phong phú (Hardhat, Remix), cộng đồng lớn. |
 | **Ngôn ngữ** | Solidity | Tài liệu phong phú, library (OpenZeppelin) đã kiểm định |
 | **EVM** | Deterministic execution | Đảm bảo kết quả giống nhau trên mọi node |
 | **Consensus** | Proof of Authority (PoA) | Nhanh, hiệu quả, phù hợp cho trusted validators |
@@ -56,9 +56,9 @@ File này sẽ chuyển từ ẩn dụ sang **thực tế kỹ thuật**: Solidi
 **Quyết định thiết kế:**
 - **Development:** Hardhat (local Ethereum network) - test nhanh, không tốn tiền
 - **Testnet:** AVAX Fuji Testnet hoặc ndachain testnet - test với điều kiện gần thực tế
-- **Mainnet:** AVAX Subnet hoặc ndachain - Sử dụng PoA consensus cho tốc độ và hiệu quả, gas rẻ, tuỳ biến cao
+- **Mainnet:** NDAChain (hạ tầng DID quốc gia) - Sử dụng PoA consensus cho tốc độ và hiệu quả, gas rẻ
 
-**Tại sao chọn AVAX Subnet/ndachain với PoA?**
+**Tại sao chọn NDAChain với PoA?**
 - ✅ **EVM-compatible**: Code Solidity hiện tại chạy ngay không cần sửa
 - ✅ **PoA Consensus**: Nhanh hơn PoS/PoW, tốn ít năng lượng, phù hợp cho mạng riêng
 - ✅ **Subnet flexibility**: Cho phép tuỳ biến governance và validator set
@@ -69,7 +69,7 @@ File này sẽ chuyển từ ẩn dụ sang **thực tế kỹ thuật**: Solidi
 - ❌ Solana (Rust): Nhanh nhưng ecosystem Web3 (Wallet, NFT marketplace) chưa mature
 - ❌ Aptos (Move): Quá mới, ít thư viện hỗ trợ
 - ❌ Polygon PoS: Tốt nhưng không linh hoạt bằng subnet riêng
-- ✅ AVAX Subnet/ndachain: Cân bằng tối ưu giữa tốc độ, chi phí, và khả năng tuỳ biến
+- ✅ NDAChain: Cân bằng tối ưu giữa tốc độ, chi phí, và bảo mật DID
 
 ---
 
@@ -664,7 +664,7 @@ User C: Trust Score = 30, thuê sách Tier C giá $10, đặt cọc $5
 - Fix bugs trước khi lên mainnet
 
 **Phase 2: Subnet/ndachain Setup (Q3 2024)**
-- Thiết lập AVAX Subnet riêng hoặc deploy lên ndachain
+- Migrate lên NDAChain Mainnet khi platform mở public access
 - Cấu hình PoA consensus với trusted validators
 - Gas cost tối ưu hóa (mục tiêu < $0.01 per transaction)
 - Update frontend RPC endpoints
@@ -768,7 +768,7 @@ Smart Contracts mang lại sự thay đổi căn bản trong cách thực thi th
 Trong VinaLib:
 - ✅ **Hiện tại**: 3 contracts (BookAsset, BookRental, PolicyEngine) trên Hardhat local
 - ✅ **Lợi ích**: Tự động hóa rental flow, escrow an toàn, policy engine transparent
-- 🎯 **Tương lai**: Deploy lên AVAX Subnet hoặc ndachain với PoA consensus, integrate Chainlink Oracle, implement DAO governance
+- 🎯 **Tương lai**: Deploy lên NDAChain Mainnet, integrate Chainlink Oracle, implement DAO governance
 
 **Lưu ý quan trọng:**  
 Smart Contracts **không thể sửa** sau khi deploy. Testing và audit kỹ lưỡng là **bắt buộc** trước khi lên mainnet. Bugs trong contract = mất tiền vĩnh viễn.
