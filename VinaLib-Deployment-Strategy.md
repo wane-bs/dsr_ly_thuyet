@@ -1,226 +1,257 @@
-# VinaLib Deployment Strategy: AVAX Subnet/ndachain với PoA Consensus
+# VinaLib Deployment Strategy: Roadmap to NDAChain
 
-## Tổng quan
+## 🎯 Tổng quan
 
-VinaLib đã quyết định sử dụng **AVAX Subnet** hoặc **ndachain** với cơ chế đồng thuận **Proof of Authority (PoA)** thay vì Polygon Layer 2. Quyết định này dựa trên các yếu tố về chi phí, tốc độ, khả năng tuỳ biến, và phù hợp với mô hình governance của VinaLib.
+VinaLib là một **DApp (Decentralized Application)** được thiết kế để triển khai trên **NDAChain** - hạ tầng DID (Định danh Phi tập trung) quốc gia của Việt Nam.
+
+**Target Platform**: NDAChain (National Hybrid DID Infrastructure)  
+**Current Status**: Development phase, using AVAX Fuji Testnet temporarily  
+**Migration Timeline**: Chờ NDAChain mở public access (hiện sandbox mode)
 
 ---
 
-## Proof of Authority (PoA) Consensus
+## 📍 NDAChain: Target Deployment Platform
 
-### Khái niệm cơ bản
+### Về NDAChain
 
-**Proof of Authority** là cơ chế đồng thuận trong đó các validators được **pre-authorized** (ủy quyền trước) dựa trên:
+**NDAChain** là hệ thống **Hybrid DID (Định danh Phi tập trung Lai)** quốc gia, kết hợp:
+- **Permissioned Blockchain**: Validators được ủy quyền bởi chính phủ
+- **National Database**: Cơ sở dữ liệu định danh quốc gia tập trung
+- **Quy mô**: 100M+ công dân Việt Nam
+- **Governance**: Chính phủ/Quốc gia
+
+**Đặc điểm kỹ thuật**:
+- Consensus: Proof of Authority (PoA)
+- Block time: < 2s
+- Finality: Deterministic
+- Gas cost: Cực thấp (< $0.01/tx)
+- EVM Compatible: ✅ Code Solidity chạy ngay
+
+### VinaLib trên NDAChain
+
+**Vai trò**: DApp triển khai trên NDAChain platform  
+**Use case**: P2P book rental với DID authentication  
+
+**Lợi ích**:
+- ✅ **DID Integration**: Tận dụng national identity infrastructure
+- ✅ **Low Cost**: Gas fees < $0.01 per transaction
+- ✅ **High Speed**: Block finality < 2s
+- ✅ **Trustworthy**: Government-backed validators
+- ✅ **Interoperability**: Tích hợp với các DApps khác trên NDAChain
+- ✅ **Scalability**: Hạ tầng quốc gia, quy mô 100M+ users
+
+**Chứng minh Use Case**:
+VinaLib là pilot project chứng minh giá trị thực tế của hạ tầng DID trong lĩnh vực sharing economy (P2P rental).
+
+---
+
+## 🚀 Deployment Roadmap
+
+### Phase 1: Development (Hiện Tại ✅)
+
+**Platform**: Hardhat Local Network  
+**Status**: Hoàn thành  
+
+**Đã thực hiện**:
+- ✅ Smart contracts development (BookAsset, BookRental, PolicyEngine)
+- ✅ Mock services (IPFS, IoT, Legal API)
+- ✅ Backend API (testing gateway)
+- ✅ Frontend UI (basic testing interface)
+
+**Environment**: Local simulation, no real gas costs
+
+---
+
+### Phase 2: Testnet Deployment (Temporary)
+
+**Platform**: **AVAX Fuji Testnet** (TEMPORARY solution)  
+**Timeline**: Q2 2024  
+**Reason**: NDAChain chưa mở public testnet access  
+
+**Mục tiêu**:
+- Test với real blockchain environment
+- Validate gas costs và performance
+- Beta testing với 50-100 users
+- Identify bugs trước production
+
+**Activities**:
+1. Deploy contracts lên AVAX Fuji
+2. Configure endpoint và RPC
+3. Integration testing
+4. User acceptance testing
+5. Performance monitoring
+
+**Note**: 
+> ⚠️ Đây là **giải pháp tạm thời** để testing. Production deployment sẽ migrate về **NDAChain**.
+
+---
+
+### Phase 3: NDAChain Mainnet (TARGET 🎯)
+
+**Platform**: **NDAChain Mainnet**  
+**Timeline**: Q3-Q4 2024 (chờ platform mở public access)  
+**Status**: NDAChain đã triển khai, đang sandbox mode  
+
+**Prerequisites**:
+- [ ] NDAChain mở public deployment access
+- [ ] Documentation và SDK từ NDAChain team
+- [ ] Onboarding process cho DApps được công bố
+
+**Migration Plan**:
+1. **Preparation**:
+   - Study NDAChain deployment guidelines
+   - Update smart contracts nếu cần (compatibility check)
+   - Prepare migration scripts
+
+2. **Deployment**:
+   - Deploy contracts lên NDAChain testnet (nếu có)
+   - Validation testing
+   - Deploy lên NDAChain mainnet
+   - DNS và endpoint update
+
+3. **Integration**:
+   - Integrate với NDAChain DID system
+   - User authentication qua national identity
+   - Compliance với regulations
+
+4. **Go-Live**:
+   - User migration từ testnet
+   - Public announcement
+   - Marketing và onboarding
+
+**Validators trên NDAChain**:
+- Managed by NDAChain governance (chính phủ/quốc gia)
+- VinaLib không tự quản validators
+- Governance: Tuân thủ quy định quốc gia
+
+---
+
+### Phase 4: Production Scale (2025+)
+
+**Focus**: Growth và Optimization
+
+**Activities**:
+- User onboarding và marketing
+- Feature expansion
+- Performance optimization
+- Community building
+- Potential DAO governance cho VinaLib community decisions
+
+---
+
+## ⚡ Proof of Authority (PoA) Consensus
+
+### Tại Sao NDAChain Dùng PoA?
+
+**Proof of Authority** là cơ chế đồng thuận trong đó validators được **pre-authorized** dựa trên:
 - **Identity**: Danh tính thực được xác minh
-- **Reputation**: Uy tín, độ tin cậy
-- **Authority**: Quyền hạn được giao
+- **Reputation**: Uy tín, độ tin cậy  
+- **Authority**: Quyền hạn được giao bởi chính phủ
 
-### So sánh với các cơ chế khác
+### So Sánh Với Các Cơ Chế Khác
 
 | Tiêu chí | Proof of Work (PoW) | Proof of Stake (PoS) | Proof of Authority (PoA) |
 |----------|---------------------|----------------------|--------------------------|
-| **Validators** | Miners (ai cũng tham gia) | Stakers (cần lock token) | Trusted nodes (pre-approved) |
-| **Yêu cầu** | Computing power | Token capital | Identity & reputation |
-| **Tốc độ** | Chậm (10-15 phút/block) | Trung bình (12-15s/block) | Nhanh (1-2s/block) |
-| **Năng lượng** | Rất cao ⚡⚡⚡ | Thấp ⚡ | Rất thấp 🌱 |
+| **Validators** | Miners (public) | Stakers (public) | Trusted nodes (government) |
+| **Tốc độ** | Chậm (10+ phút) | Trung bình (12-15s) | Nhanh (< 2s) |
 | **Chi phí** | Đắt ($$$) | Trung bình ($$) | Rẻ ($) |
 | **Finality** | Probabilistic | Near-instant | Deterministic |
-| **Decentralization** | Cao | Trung bình-Cao | Thấp (trade-off) |
-| **Use Case** | Public blockchain | Public blockchain | Consortium/Enterprise |
+| **Decentralization** | Cao | Trung bình | Thấp (trade-off) |
+| **Use Case** | Public blockchain | Public blockchain | **National Infrastructure** |
 
-### Ưu điểm của PoA cho VinaLib
+### Ưu Điểm Cho NDAChain & VinaLib
 
 1. **Tốc độ cao**: Block time < 2s, finality ngay lập tức
-2. **Chi phí thấp**: Không cần mining/staking, gas fees gần như bằng 0
+2. **Chi phí thấp**: Gas fees gần như bằng 0
 3. **Hiệu quả năng lượng**: Không cần computational power lớn
 4. **Deterministic**: Không có fork, transaction finality rõ ràng
-5. Phù hợp với trusted network**: Validators là các
-
- đối tác tin cậy (thư viện, tổ chức)
-
-### Validators trong VinaLib PoA
-
-```
-Validator Set (5-10 nodes):
-├─ Validator 1: VinaLib Organization
-├─ Validator 2: University Library Partner
-├─ Validator 3: City Library System
-├─ Validator 4: Publishing House Partner
-├─ Validator 5: Technology Partner
-└─ ...
-
-Mỗi validator:
-✅ Danh tính công khai, có thể kiểm chứng
-✅ Reputation stake: Mất uy tín nếu misbehave
-✅ Accountable: Chịu trách nhiệm trước community
-✅ Geographic distribution: Validators ở nhiều vị trí khác nhau
-```
+5. **Phù hợp governance**: Validators là government-backed entities
 
 ---
 
-## AVAX Subnet vs ndachain
-
-### AVAX Subnet
-
-**Avalanche Subnet** là một blockchain tuỳ biến chạy trên Avalanche network, có thể:
-- Sử dụng custom consensus (PoA trong trường hợp VinaLib)
-- Tuỳ chỉnh virtual machine (EVM trong trường hợp này)
-- Định nghĩa validator set riêng
-- Anchor về Primary Network (C-Chain) để bảo mật
-
-**Lợi ích:**
-- ✅ Infrastructure mature (Avalanche ecosystem đã hoạt động)
-- ✅ Tools phong phú (AvalancheGo, Subnet-EVM)
-- ✅ Security: Anchored to Avalanche C-Chain
-- ✅ Interoperability: Có thể bridge với các subnet khác
-- ✅ Documentation đầy đủ
-
-**Chi phí:**
-- Validator requirements: Validateor phải stake AVAX trên Primary Network
-- Operational cost: Chi phí server + infrastructure
-
-### ndachain
-
-**ndachain** (nếu hiểu đúng) là một blockchain riêng độc lập, có thể:
-- 100% kiểm soát infrastructure
-- Tuỳ biến hoàn toàn mọi aspect
-- Không phụ thuộc vào network khác
-
-**Lợi ích:**
-- ✅ Hoàn toàn độc lập
-- ✅ Tuỳ biến 100%
-- ✅ Không phụ thuộc ecosystem khác
-
-**Thách thức:**
-- ⚠️ Cần build infrastructure từ đầu
-- ⚠️ Security phụ thuộc hoàn toàn vào validator set
-- ⚠️ Ít documentation/community support
-
-### Quyết định
-
-**Ưu tiên: AVAX Subnet**
-- Lý do: Mature ecosystem, security cao, tools tốt
-
-**Dự phòng: ndachain**
-- Nếu: AVAX subnet không phù hợp hoặc chi phí quá cao
-
----
-
-## So sánh Chi phí
+## 💰 So Sánh Chi Phí
 
 ### Deployment Cost
 
-| Contract | Ethereum | Polygon | AVAX Subnet (PoA) |
-|----------|----------|---------|-------------------|
-| BookAsset | $150 | $0.15 | < $0.10 |
-| BookRental | $200 | $0.20 | < $0.10 |
-| PolicyEngine | $180 | $0.18 | < $0.10 |
-| RentalAgreementSBT | $120 | $0.12 | < $0.08 |
-| SuChinToken | $100 | $0.10 | < $0.05 |
-| VinaLibVault | $250 | $0.25 | < $0.15 |
-| **TOTAL** | $1,000 | $1.00 | **< $0.58** |
+| Contract | Ethereum L1 | Polygon L2 | NDAChain (PoA) |
+|----------|-------------|------------|----------------|
+| BookAsset | $150 | $0.15 | **< $0.10** |
+| BookRental | $200 | $0.20 | **< $0.10** |
+| PolicyEngine | $180 | $0.18 | **< $0.10** |
+| RentalAgreementSBT | $120 | $0.12 | **< $0.08** |
+| SuChinToken | $100 | $0.10 | **< $0.05** |
+| VinaLibVault | $250 | $0.25 | **< $0.15** |
+| **TOTAL** | **$1,000** | $1.00 | **< $0.58** |
 
 ### Operational Cost (1000 users/month)
 
-| Operation | Ethereum | Polygon | AVAX Subnet (PoA) |
-|-----------|----------|---------|-------------------|
-| Mint NFT (100/month) | $1,200 | $1.20 | < $1.00 |
-| Create Rental (500/month) | $7,500 | $7.50 | < $3.00 |
-| Return Book (500/month) | $5,000 | $5.00 | < $3.00 |
-| Mint SBT (500/month) | $6,000 | $6.00 | < $2.50 |
-| **TOTAL** | $19,700 | $19.70 | **< $9.50** |
+| Operation | Ethereum L1 | Polygon L2 | NDAChain (PoA) |
+|-----------|-------------|------------|----------------|
+| Mint NFT (100/month) | $1,200 | $1.20 | **< $1.00** |
+| Create Rental (500/month) | $7,500 | $7.50 | **< $3.00** |
+| Return Book (500/month) | $5,000 | $5.00 | **< $3.00** |
+| Mint SBT (500/month) | $6,000 | $6.00 | **< $2.50** |
+| **TOTAL** | **$19,700** | **$19.70** | **< $9.50** |
+
+**Savings**: 99.95%+ so với Ethereum, 95%+ so với Polygon
 
 ---
 
-## Migration Roadmap
+## 🔧 Technical Specifications (NDAChain)
 
-### Phase 1: Development (Hiện tại)
-- ✅ Hardhat local network
-- ✅ Smart contracts development
-- ✅ Testing với mock services
-
-### Phase 2: Testnet Deployment (Q2 2024)
-- Deploy lên AVAX Fuji Testnet
-- Hoặc setup ndachain testnet
-- Cấu hình PoA validator set
-- Integration testing
-- Beta testing với 50 users
-
-### Phase 3: Subnet/ndachain Setup (Q3 2024)
-- Launch AVAX Subnet với PoA consensus
-- Hoặc launch ndachain mainnet
-- Setup 5-10 trusted validators
-- Configure governance rules
-- Monitoring và alerting
-
-### Phase 4: Production Deployment (Q4 2024)
-- Deploy contracts lên mainnet
-- User onboarding
-- Marketing và growth
-
-### Phase 5: Decentralization (2025+)
-- Mở rộng validator set
-- Community governance
-- DAO implementation
-
----
-
-## Technical Specifications
-
-### Blockchain Parameters
+### Expected Blockchain Parameters
 
 ```yaml
-Chain Name: VinaLib Network
-Chain ID: TBD (sẽ xác định khi deploy)
+Chain Name: NDAChain Mainnet
 Consensus: Proof of Authority (PoA)
-Block Time: 2 seconds
-Gas Limit: 15,000,000
-Native Token: VLIB (hoặc sử dụng AVAX)
-
-EVM Version: London
-Solidity Version: ^0.8.20
-OpenZeppelin Version: 5.0
+Block Time: < 2 seconds
+Finality: Deterministic
+Gas Limit: TBD (theo NDAChain specs)
+Compatible: EVM (Solidity ^0.8.20)
 
 Validators:
-  Count: 5-10
-  Selection: Invite-only, identity-verified
-  Rotation: Quarterly review
+  Managed By: NDAChain Governance (Government)
+  Count: TBD (theo national infrastructure)
+  Selection: Government-authorized entities
 ```
 
-### Validator Requirements
+### VinaLib Smart Contracts
 
 ```yaml
-Hardware:
-  CPU: 4+ cores
-  RAM: 8+ GB
-  Storage: 500+ GB SSD
-  Network: 100+ Mbps
+Solidity Version: ^0.8.20
+OpenZeppelin: 5.0
+EVM Version: London
 
-Software:
-  OS: Ubuntu 22.04 LTS
-  Node: AvalancheGo hoặc custom client
-  Monitoring: Prometheus + Grafana
-
-Governance:
-  Identity: KYC verified
-  Reputation: Public track record
-  Commitment: Minimum 1 year participation
+Contracts:
+  - BookAsset (ERC-721 + ERC-4907)
+  - BookRental (Rental logic)
+  - PolicyEngine (Auto-approval)
+  - RentalAgreementSBT (Soulbound)
+  - SuChinToken (ERC-20)
+  - VinaLibVault (Chainlink integration)
 ```
 
 ---
 
-## Kết luận
+## 🎯 Kết Luận
 
-Việc sử dụng **AVAX Subnet hoặc ndachain với PoA consensus** mang lại cho VinaLib:
+Việc triển khai **VinaLib trên NDAChain** mang lại:
 
 1. **Chi phí cực thấp**: < $10/month cho 1000 users
 2. **Tốc độ cao**: < 2s block time, deterministic finality
-3. **Tuỳ biến cao**: Control governance, validator set, parameters
-4. **EVM compatible**: Code Solidity hiện tại chạy ngay
-5. **Phù hợp model**: Trusted consortium network
+3. **DID Integration**: Tận dụng hạ tầng định danh quốc gia
+4. **EVM Compatible**: Code Solidity hiện tại chạy ngay
+5. **Government-backed**: Validators đáng tin cậy, governance minh bạch
+6. **Scalability**: Infrastructure quốc gia, quy mô millions of users
 
-Trade-off chấp nhận được:
+**Trade-off chấp nhận được**:
 - Decentralization thấp hơn public blockchain (nhưng đủ cho use case)
-- Phụ thuộc vào validator set (nhưng validators là trusted partners)
+- Phụ thuộc vào NDAChain platform roadmap
+- Governance bởi chính phủ (alignment với mục tiêu national infrastructure)
 
-**Recommendation: Triển khai trên AVAX Subnet với PoA consensus là lựa chọn tối ưu cho VinaLib.**
+**Recommendation**: 
+> 🎯 Triển khai trên **NDAChain** là lựa chọn tối ưu và chiến lược lâu dài cho VinaLib. Hiện tại dùng AVAX Fuji Testnet để sẵn sàng migrate khi NDAChain mở public access.
+
+---
+
+**Xem thêm**: [NDAChain Whitepaper](../../kiến%20trúc/ban%20đầu/NDAChain-Whitepaper-VIE.md)
