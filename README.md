@@ -33,6 +33,7 @@ Sau khi đã nắm vững nền tảng, hãy đi sâu vào từng module:
 | **5** | **[IoT & Thực tế](./5-IoT.md)** | Kết nối khóa thông minh, MQTT, Bảo mật thiết bị vật lý. |
 
 ---
+Đây là tài liệu nghiên cứu sử dụng cho mục đích học thuật thuộc về tác giả dưới sự kiểm soát của Trường Đại học Công Thương Tp.HCM. Mọi hành vi sử dụng tài liệu này bất kể mục đích đề nghị liên hệ lại cho tác giả qua gmail: trunghieuwane@gmail.com
 
 ## 🤝 Đóng góp
 
