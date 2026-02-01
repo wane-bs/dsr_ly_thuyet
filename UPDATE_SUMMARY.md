@@ -1,4 +1,4 @@
-# Bản Cập Nhật Tài Liệu - AVAX Subnet/ndachain với PoA
+# Bản Cập Nhật Tài Liệu - AVAX Subnet/NDAchain với PoA
 
 **Ngày cập nhật:** 2026-02-01  
 **Deployment Target:** NDAChain (Hạ tầng DID quốc gia) với PoA consensus
@@ -189,3 +189,4 @@ MỚI: "< 2 seconds deterministic finality với PoA"
 ---
 
 **Lưu ý:** Tất cả thay đổi đều backward-compatible với code hiện tại vì EVM compatibility. Smart contracts không cần thay đổi, chỉ cần redeploy lên network mới.
+
