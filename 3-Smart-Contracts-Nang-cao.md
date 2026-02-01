@@ -3,7 +3,7 @@ layout: default
 title: Smart Contracts (Nâng cao)
 ---
 
-# Smart Contracts Nâng cao: Patterns và Tối ưu hóandards
+# Smart Contracts Nâng cao: Patterns & Standards
 ## Tài liệu Chuyên sâu về Ownable, Pausable, ERC Standards, NFT, SBT, và OOP trong Solidity
 
 > 📍 **Vị trí trong bộ tài liệu**: 3/5 - Logic cốt lõi (Nâng cao)  
@@ -119,7 +119,7 @@ Layer 1 là blockchain cơ sở, tự thực thi consensus và xử lý toàn b�
 | **Binance Smart Chain (BSC)** | Proof of Staked Authority | ~60-100 | $0.2-1 | ✅ Solidity (EVM) |
 | **Avalanche** | Avalanche Consensus | ~4500 | $0.01-0.5 | ✅ Solidity (EVM) |
 | **Solana** | Proof of History + PoS | ~3000-5000 | $0.00025 | ✅ Rust (SVM) |
-| **AVAX Subnet (PoA)** | Proof of Authority (tuỳ biến) | ~5000+ | < $0.01 | ✅ Solidity (EVM) |
+| **NDAChain (PoA)** | Proof of Authority (tuỳ biến) | ~5000+ | < $0.01 | ✅ Solidity (EVM) |
 
 **Đặc điểm Layer 1:**
 - ✅ **Fully Decentralized**: Mọi transaction được validate bởi toàn bộ network
@@ -173,16 +173,16 @@ zkRollups (zkSync, StarkNet):
 
 ---
 
-### 💡 Tại sao VinaLib chọn AVAX Subnet/ndachain với PoA?
+### 💡 Tại sao VinaLib chọn NDAChain với PoA?
 
 > [!NOTE]
-> **Quyết định triển khai:** VinaLib sử dụng **AVAX Subnet hoặc ndachain** với cơ chế đồng thuận **Proof of Authority (PoA)** để tối ưu hóa chi phí, tốc độ, và khả năng tuỳ biến governance.
+> **Quyết định triển khai:** VinaLib là **DApp trên NDAChain** - hạ tầng DID quốc gia sử dụng **Proof of Authority (PoA)** để tối ưu hóa chi phí, tốc độ, và bảo mật.
 >
 > Xem chi tiết: [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)
 
 **Quyết định chiến lược:**
 
-| Yếu tố | Ethereum L1 | AVAX Subnet/ndachain (PoA) |
+| Yếu tố | Ethereum L1 | NDAChain (PoA) |
 |--------|-------------|----------------------------|
 | **Gas Cost** | $5-50/tx | < $0.01/tx |
 | **Tốc độ** | 15s/block | < 2s/block (PoA) |
@@ -202,7 +202,7 @@ Workflow thuê sách trên Ethereum L1:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total: $65 chỉ để THUÊ MỘT CUỐN SÁCH! ❌
 
-Workflow thuê sách trê AVAX Subnet/ndachain với PoA:
+Workflow thuê sách trê NDAChain với PoA:
 1. User approve → Gas: < $0.001
 2. Create rental → Gas: < $0.001
 3. Policy + escrow → Gas: < $0.002
@@ -214,7 +214,7 @@ Total: < $0.006 cho toàn bộ flow! ✅
 
 **Trade-offs được chấp nhận:**
 
-| Aspect | L1 Ethereum | AVAX Subnet/ndachain (PoA) | VinaLib Accept? |
+| Aspect | L1 Ethereum | NDAChain (PoA) | VinaLib Accept? |
 |--------|-------------|----------------------------|-----------------|
 | **Decentralization** | ~500k validators | 5-20 trusted validators | ✅ Yes (PoA phù hợp cho trusted consortium) |
 | **Security** | Maximum | High (validators có reputation stake) | ✅ Yes (sách không phải DeFi triệu $) |
@@ -235,7 +235,7 @@ Phase 2: Testnet
 └─ Gas: FREE (testnet faucets)
 
 Phase 3: Production (Target)
-├─ AVAX Subnet hoặc ndachain Mainnet
+├─ NDAChain Mainnet (Target Platform)
 ├─ Reasons:
 │  ✅ EVM 100% compatible (code Solidity chạy ngay)
 │  ✅ PoA consensus: Fast, efficient, low cost
@@ -259,7 +259,7 @@ Phase 3: Production (Target)
 
 **Deployment Cost (VinaLib Full Stack):**
 
-| Contract | Ethereum L1 | AVAX Subnet/ndachain (PoA) | Savings |
+| Contract | Ethereum L1 | NDAChain (PoA) | Savings |
 |----------|-------------|----------------------------|---------|
 | BookAsset (ERC-721) | $150 | < $0.10 | 99.9%+ |
 | BookRental | $200 | < $0.10 | 99.9%+ |
@@ -279,7 +279,7 @@ Phase 3: Production (Target)
 | Mint SBT | 500/month | $6000 | < $2.5 |
 | **TOTAL** | - | **$19,700/month** | **< $9.5/month** |
 
-**Kết luận:** AVAX Subnet hoặc ndachain với PoA consensus cho phép VinaLib hoạt động hoàn toàn sustainable với chi phí gần như bằng 0, đồng thời giữ được EVM compatibility và có khả năng tuỳ biến governance theo nhu cầu riêng của dự án.
+**Kết luận:** Triển khai trên NDAChain với PoA consensus cho phép VinaLib hoạt động hoàn toàn sustainable với chi phí gần như bằng 0, đồng thời tận dụng hạ tầng DID quốc gia để xác thực người dùng.
 
 ---
 
