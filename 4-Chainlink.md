@@ -17,6 +17,9 @@ title: Chainlink Oracle
 | [IoT](./5-IoT.md) | Functions lấy IoT data, hash logs lên chain |
 | [IPFS](./1-IPFS.md) | Functions có thể upload/fetch từ IPFS |
 
+> [!NOTE]
+> **VinaLib Deployment:** VinaLib sẽ triển khai trên **AVAX Subnet hoặc ndachain với PoA consensus**. Chainlink services được đề cập trong tài liệu này hỗ trợ nhiều blockchain networks (bao gồm Ethereum, Polygon, Avalanche, và các chains tương thích EVM khác). Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md) để biết chi tiết.
+
 ---
 
 ## 📚 Mục lục
