@@ -42,25 +42,34 @@ File này sẽ chuyển từ ẩn dụ sang **thực tế kỹ thuật**: Solidi
 
 ## 💡 Tại sao VinaLib chọn Solidity và EVM?
 
-**Câu hỏi:** Có nhiều blockchain platforms (Ethereum, Solana, Polkadot...) và nhiều ngôn ngữ (Solidity, Rust, Move...). Tại sao chọn Solidity?
+**Câu hỏi:** Có nhiều blockchain platforms (Ethereum, Solana, Polkadot, Avalanche...) và nhiều ngôn ngữ (Solidity, Rust, Move...). Tại sao chọn Solidity?
 
 **Trả lời:**
 
 | Yếu tố | Lựa chọn VinaLib | Lý do |
 |--------|-----------------|-------|
-| **Blockchain** | Ethereum-compatible (Polygon, BSC có thể) | Ecosystem lớn nhất, tools mature nhất |
+| **Blockchain** | AVAX Subnet hoặc ndachain (EVM-compatible) | Tính linh hoạt cao, PoA consensus phù hợp, gas rẻ |
 | **Ngôn ngữ** | Solidity | Tài liệu phong phú, library (OpenZeppelin) đã kiểm định |
 | **EVM** | Deterministic execution | Đảm bảo kết quả giống nhau trên mọi node |
+| **Consensus** | Proof of Authority (PoA) | Nhanh, hiệu quả, phù hợp cho trusted validators |
 
 **Quyết định thiết kế:**
 - **Development:** Hardhat (local Ethereum network) - test nhanh, không tốn tiền
-- **Testnet:** Sepolia hoặc Polygon Mumbai - test với điều kiện gần thực tế
-- **Mainnet:** Polygon (sẽ deploy sau) - Gas rẻ hơn Ethereum mainnet 100x
+- **Testnet:** AVAX Fuji Testnet hoặc ndachain testnet - test với điều kiện gần thực tế
+- **Mainnet:** AVAX Subnet hoặc ndachain - Sử dụng PoA consensus cho tốc độ và hiệu quả, gas rẻ, tuỳ biến cao
+
+**Tại sao chọn AVAX Subnet/ndachain với PoA?**
+- ✅ **EVM-compatible**: Code Solidity hiện tại chạy ngay không cần sửa
+- ✅ **PoA Consensus**: Nhanh hơn PoS/PoW, tốn ít năng lượng, phù hợp cho mạng riêng
+- ✅ **Subnet flexibility**: Cho phép tuỳ biến governance và validator set
+- ✅ **Gas rẻ**: Chi phí thấp cho người dùng cuối
+- ✅ **Throughput cao**: Xử lý nhiều giao dịch song song
 
 **Alternatives không chọn:**
 - ❌ Solana (Rust): Nhanh nhưng ecosystem Web3 (Wallet, NFT marketplace) chưa mature
-- ❌  (Move): Quá mới, ít thư viện hỗ trợ
-- ✅ Solidity: Trung bình về tốc độ nhưng **battle-tested**, có OpenZeppelin patterns
+- ❌ Aptos (Move): Quá mới, ít thư viện hỗ trợ
+- ❌ Polygon PoS: Tốt nhưng không linh hoạt bằng subnet riêng
+- ✅ AVAX Subnet/ndachain: Cân bằng tối ưu giữa tốc độ, chi phí, và khả năng tuỳ biến
 
 ---
 
@@ -648,16 +657,18 @@ User C: Trust Score = 30, thuê sách Tier C giá $10, đặt cọc $5
 ### 🚀 Migration Path (Roadmap)
 
 **Phase 1: Testnet Deployment (Q2 2024)**
-- Deploy contracts lên Sepolia hoặc Goerli testnet
+- Deploy contracts lên AVAX Fuji Testnet hoặc ndachain testnet
 - Test với real gas costs và network latency
+- Cấu hình PoA validator set cho môi trường test
 - Invite 50 beta testers để stress test
 - Fix bugs trước khi lên mainnet
 
-**Phase 2: Layer 2 Integration (Q3 2024)**
-- Deploy lên Polygon hoặc Arbitrum
-- Gas cost giảm từ $10 → $0.01 per transaction
+**Phase 2: Subnet/ndachain Setup (Q3 2024)**
+- Thiết lập AVAX Subnet riêng hoặc deploy lên ndachain
+- Cấu hình PoA consensus với trusted validators
+- Gas cost tối ưu hóa (mục tiêu < $0.01 per transaction)
 - Update frontend RPC endpoints
-- Implement cross-chain bridging nếu cần
+- Implement monitoring và alert systems
 
 **Phase 3: Decentralized Oracle (Q4 2024)**
 - Tích hợp Chainlink Automation thay thế admin manual approve
@@ -757,7 +768,7 @@ Smart Contracts mang lại sự thay đổi căn bản trong cách thực thi th
 Trong VinaLib:
 - ✅ **Hiện tại**: 3 contracts (BookAsset, BookRental, PolicyEngine) trên Hardhat local
 - ✅ **Lợi ích**: Tự động hóa rental flow, escrow an toàn, policy engine transparent
-- 🎯 **Tương lai**: Deploy lên L2 (Polygon), integrate Chainlink Oracle, implement DAO governance
+- 🎯 **Tương lai**: Deploy lên AVAX Subnet hoặc ndachain với PoA consensus, integrate Chainlink Oracle, implement DAO governance
 
 **Lưu ý quan trọng:**  
 Smart Contracts **không thể sửa** sau khi deploy. Testing và audit kỹ lưỡng là **bắt buộc** trước khi lên mainnet. Bugs trong contract = mất tiền vĩnh viễn.
