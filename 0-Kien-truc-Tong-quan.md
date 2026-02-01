@@ -300,8 +300,8 @@ User (👤)        Smart Contract (⛓️)      Chainlink (🔮)        IPFS (�
 | **Phase 2** | Chainlink Automation | 🔄 In Progress | Placeholder checkUpkeep/performUpkeep |
 | **Phase 3** | Real IPFS | 📋 Planned | Migrate sang Pinata/Web3.Storage |
 | **Phase 3** | Real Tuya | 📋 Planned | Connect với Tuya Cloud API thật |
-| **Phase 4** | Testnet Deploy | 📋 Planned | Sepolia/Polygon Mumbai |
-| **Phase 5** | Mainnet Deploy | 📋 Planned | Polygon mainnet (low gas) |
+| **Phase 4** | Testnet Deploy | 📋 Planned | AVAX Fuji Testnet hoặc ndachain testnet |
+| **Phase 5** | Mainnet Deploy | 📋 Planned | AVAX Subnet hoặc ndachain với PoA consensus |
 
 ---
 
