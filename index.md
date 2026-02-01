@@ -10,7 +10,7 @@ Chào mừng đến với kho tri thức nền tảng của dự án **VinaLib**
 Bộ tài liệu này được biên soạn để cung cấp kiến thức từ cơ bản đến nâng cao về các công nghệ cốt lõi: Blockchain, Smart Contracts, IPFS, Chainlink và IoT.
 
 > [!NOTE]
-> **Deployment:** VinaLib triển khai trên **AVAX Subnet/ndachain với Proof of Authority (PoA)** để tối ưu hóa chi phí (< $0.01/tx), tốc độ (< 2s finality), và khả năng tuỳ biến. Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md).
+> **Deployment:** VinaLib là **DApp trên NDAChain** (hạ tầng DID quốc gia) để tối ưu hóa chi phí (< $0.01/tx), tốc độ (< 2s finality). Hiện test trên AVAX Fuji (temporary). Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md).
 
 ---
 
@@ -52,7 +52,7 @@ Sau khi đã nắm vững nền tảng, hãy đi sâu vào từng module:
 |---|--------|----------------|
 | **1** | **[Hệ thống Lưu trữ (IPFS)](./1-IPFS.md)** | Content Addressing, CID, Pinning, Cách VinaLib lưu ảnh bìa sách. |
 | **2** | **[Smart Contracts - Cơ bản](./2-Smart-Contracts-Co-ban.md)** | Solidity, EVM, Gas, Workflow chính của BookAsset & BookRental. |
-| **3** | **[Smart Contracts - Nâng cao](./3-Smart-Contracts-Nang-cao.md)** | AVAX Subnet/ndachain với PoA, Design Patterns (Ownable), Token Standards (ERC-721, SBT). |
+| **3** | **[Smart Contracts - Nâng cao](./3-Smart-Contracts-Nang-cao.md)** | NDAChain với PoA, Design Patterns (Ownable), Token Standards (ERC-721, SBT). |
 | **4** | **[Chainlink Oracle](./4-Chainlink.md)** | Kết nối dữ liệu off-chain, VRF (Randomness), Automation, Functions. |
 | **5** | **[IoT & Thực tế](./5-IoT.md)** | Kết nối khóa thông minh, MQTT, Bảo mật thiết bị vật lý. |
 
@@ -62,7 +62,7 @@ Sau khi đã nắm vững nền tảng, hãy đi sâu vào từng module:
 
 | Tài liệu | Nội dung | Dành cho |
 |----------|----------|----------|
-| **[VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)** 🆕 | Chi tiết về Proof of Authority (PoA), AVAX Subnet vs ndachain, validator setup, roadmap. | Developers, DevOps, Architects |
+| **[VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)** 🆕 | Roadmap to NDAChain: PoA consensus, AVAX temporary testnet, NDAChain target platform. | Developers, DevOps, Architects |
 
 ---
 
