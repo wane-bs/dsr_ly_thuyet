@@ -273,43 +273,67 @@ Phần đầu tiên là **Logic On-chain**: Smart Contract xử lý các quyết
 
 Quy trình phát triển tiêu chuẩn bao gồm: phát triển và thử nghiệm trên môi trường local (như Hardhat), triển khai lên Testnet để kiểm tra với điều kiện gần thực tế, và cuối cùng triển khai lên Mainnet khi đã sẵn sàng.
 
-### Layer 1 và Layer 2 - Giải pháp Mở rộng
+### Layer 1 và AVAX Subnet với PoA - Lựa chọn Triển khai
 
-Một câu hỏi quan trọng khi triển khai ứng dụng blockchain là: nên deploy lên đâu? **Layer 1** (Ethereum mainnet) hay **Layer 2** (Polygon, Arbitrum...)?
+> [!NOTE]
+> **Deployment Target:** VinaLib triển khai trên **AVAX Subnet hoặc ndachain** với cơ chế đồng thuận **Proof of Authority (PoA)**. Xem chi tiết tại [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)
+
+Một câu hỏi quan trọng khi triển khai ứng dụng blockchain là: nên deploy lên đâu? **Layer 1** (Ethereum mainnet) hay **Subnet riêng với PoA consensus**?
 
 **Layer 1** giống như đường cao tốc chính - an toàn và đáng tin cậy nhất, nhưng đông đúc và phí cao. Khi mạng lưới đông, một giao dịch đơn giản có thể tốn từ $5 đến $50 chỉ để trả phí gas. Workflow thuê một cuốn sách trên VinaLib (approve token, tạo rental, lock tiền cọc, mint SBT) có thể tốn lên đến $65 chỉ cho phí gas!
 
-**Layer 2** giống như những đường vòng song song được xây dựng để giảm tải cho đường chính. Chúng xử lý giao dịch nhanh hơn và rẻ hơn, nhưng vẫn liên kết với Layer 1 để kế thừa tính bảo mật. Cùng workflow thuê sách đó trên Polygon (một L2) chỉ tốn khoảng $0.008 - rẻ hơn gấp 8000 lần!
+**AVAX Subnet hoặc ndachain với PoA** (lựa chọn của VinaLib) là giải pháp tối ưu kết hợp tốc độ, chi phí thấp, và khả năng tuỳ biến. Đây không phải là Layer 2, mà là một blockchain riêng hoàn toàn có thể tuỳ biến. VinaLib có thể chọn cơ chế đồng thuận riêng (**Proof of Authority - PoA**), validator set riêng, và governance rules riêng. Cùng workflow thuê sách chỉ tốn < $0.006 - rẻ hơn gấp 10,000+ lần!
 
-**Tại sao Layer 2 rẻ hơn?** Layer 2 xử lý hàng nghìn giao dịch cùng lúc, sau đó chỉ gửi một "bản tóm tắt" lên Layer 1. Giống như thay vì gửi một lá thư riêng cho từng người, bạn gộp tất cả vào một kiện hàng duy nhất. Chi phí được chia sẻ giữa hàng nghìn giao dịch, nên mỗi người chỉ trả một phần rất nhỏ.
+**Proof of Authority (PoA) là gì?**
 
-**Những lựa chọn Layer 2 phổ biến:**
+PoA là cơ chế đồng thuận trong đó các validators được **ủy quyền trước** dựa trên danh tính và uy tín thay vì staking token. Hãy tưởng tượng thay vì để ai cũng có thể tham gia xác thực (như PoS), bạn chọn một nhóm các tổ chức tin cậy (thư viện, đối tác, VinaLib) làm validators.
 
-**Polygon** (lựa chọn của VinaLib) là "sidechain" - một blockchain song song chạy rất nhanh (2 giây/block so với 15 giây của Ethereum) và rất rẻ. Mỗi 30 phút, Polygon gửi một "checkpoint" (điểm kiểm tra) lên Ethereum để đảm bảo an toàn. Polygon hoạt động giống hệt Ethereum về mặt code (100% tương thích), nên các Smart Contract chỉ cần copy-paste là chạy ngay.
+**Ưu điểm của PoA cho VinaLib:**
 
-**Optimism và Arbitrum** là "Optimistic Rollups" - chúng giả định tất cả giao dịch đều hợp lệ, và chỉ kiểm tra nếu có ai khiếu nại trong vòng 7 ngày. Điều này làm giảm công việc cần thiết, nhưng có nghĩa bạn phải đợi 7 ngày để rút tiền về Ethereum.
+- ⚡ **Tốc độ cực nhanh**: < 2 giây/block (so với 12-15 giây của Ethereum)
+- 💰 **Chi phí cực thấp**: < $0.01/transaction
+- 🔒 **Deterministic finality**: Không có fork, giao dịch finalize ngay lập tức
+- 🎛️ **Tuỳ biến hoàn toàn**: Control validator set, governance, parameters
+- 🌱 **Hiệu quả năng lượng**: Không cần mining/staking lớn
 
-**zkSync và StarkNet** sử dụng toán học cao cấp (zero-knowledge proofs) để chứng minh ngay lập tức rằng giao dịch hợp lệ mà không cần kiểm tra từng chi tiết. Chúng rất an toàn và nhanh, nhưng phức tạp hơn và đôi khi không tương thích 100% với Ethereum code.
+**So sánh chi phí thực tế:**
 
-**Trade-offs (Sự đánh đổi):**
+```
+Workflow thuê sách trên Ethereum L1:
+- Approve + Create rental + Lock deposit + Mint SBT
+- Total: $57 ❌
 
-Layer 2 không phải là hoàn hảo. Bạn phải chấp nhận một số thỏa hiệp. **Tính phi tập trung** giảm một chút: Ethereum có hàng trăm nghìn validators, còn Polygon chỉ có khoảng 100. Nhưng đối với ứng dụng cho thuê sách như VinaLib, 100 validators vẫn là đủ an toàn. 
+Workflow thuê sách trên AVAX Subnet/ndachain (PoA):
+- Approve + Create rental + Lock deposit + Mint SBT  
+- Total: < $0.005 ✅ (rẻ hơn 11,000+ lần!)
+```
 
-**Finality** (tính chắc chắn cuối cùng) cũng khác: trên Polygon, giao dịch được xác nhận "mềm" sau 2 giây (đủ cho hầu hết trường hợp), nhưng chỉ chắc chắn hoàn toàn sau khi checkpoint được gửi lên Ethereum (30 phút). Với ứng dụng cho thuê sách, điều này hoàn toàn chấp nhận được - không ai cần độ chắc chắn tuyệt đối trong 2 giây khi thuê một cuốn sách.
+**Trade-offs được chấp nhận:**
 
-**Bridging** (cầu nối giữa các layers) là quá trình chuyển tài sản từ Layer 1 sang Layer 2 và ngược lại. Nếu bạn có ETH trên Ethereum và muốn dùng trên Polygon, bạn phải "lock" (khóa) ETH vào một Smart Contract trên Ethereum, sau đó một lượng tương đương sẽ được "mint" (tạo ra) trên Polygon. Khi muốn quay lại, quá trình ngược lại xảy ra.
+**Tính phi tập trung**: AVAX Subnet với PoA chỉ có 5-20 validators thay vì hàng trăm nghìn như Ethereum. Nhưng đối với ứng dụng cho thuê sách, các validators là những tổ chức tin cậy (thư viện đối tác, VinaLib team) - điều này đủ an toàn cho use case của VinaLib.
 
-Tuy nhiên, **VinaLib không cần bridging** vì toàn bộ ecosystem (sách, token thanh toán, contracts) đều được xây dựng hoàn toàn trên Polygon. User chỉ cần mua MATIC (đồng tiền native của Polygon) trực tiếp từ sàn giao dịch và chuyển về ví của họ. Đơn giản hơn nhiều!
+**Finality**: PoA cung cấp **deterministic finality** < 2 giây - nhanh và rõ ràng hơn nhiều so với probabilistic finality của PoS. Không cần chờ 30 phút như Layer 2 sidechains hay 7 ngày như Optimistic Rollups.
+
+**Permissioned network**: Chỉ authorized validators mới có thể tham gia. Đây là trade-off có chủ đích để đổi lấy tốc độ và chi phí thấp, phù hợp cho **trusted consortium** (liên minh các tổ chức tin cậy).
+
+**Onboarding đơn giản:**
+
+Toàn bộ ecosystem (sách, token thanh toán, contracts) đều trên AVAX Subnet/ndachain. User chỉ cần:
+- Connect wallet (MetaMask hoặc tương tự)
+- Nhận gas token từ faucet (testnet) hoặc mua AVAX trên sàn (mainnet)
+- Bắt đầu sử dụng - không cần bridge phức tạp!
 
 **Lộ trình Deploy của VinaLib:**
 
-Hiện tại, VinaLib đang ở giai đoạn development trên Hardhat (mạng local giả lập). Bước tiếp theo là testing trên Sepolia (Ethereum testnet) và Mumbai (Polygon testnet) để đảm bảo mọi thứ hoạt động đúng. Khi sẵn sàng cho production, VinaLib sẽ deploy lên **Polygon Mainnet** vì ba lý do chính:
+Hiện tại, VinaLib đang ở giai đoạn development trên Hardhat (mạng local giả lập). Bước tiếp theo là testing trên **AVAX Fuji Testnet** hoặc **ndachain testnet** để đảm bảo mọi thứ hoạt động đúng. Khi sẵn sàng cho production, VinaLib sẽ deploy lên **AVAX Subnet hoặc ndachain Mainnet với PoA consensus** vì các lý do chính:
 
-1. **Chi phí sustainable:** $1 cho deployment toàn bộ hệ thống thay vì $1000, và chỉ $19.7/tháng cho 1000 users thay vì $19,700
-2. **Trải nghiệm người dùng tốt:** Giao dịch xác nhận trong 2 giây, phí rẻ đến mức người dùng gần như không cảm nhận
-3. **Tương thích hoàn toàn:** Code Solidity chạy nguyên xi, không cần chỉnh sửa gì
+1. **Chi phí cực kỳ sustainable**: < $0.58 cho deployment toàn bộ hệ thống thay vì $1000, và chỉ < $9.5/tháng cho 1000 users thay vì $19,700
+2. **Trải nghiệm người dùng tốt nhất**: Giao dịch xác nhận trong < 2 giây với deterministic finality, phí gần như bằng 0
+3. **Tương thích hoàn toàn**: EVM compatible 100%, code Solidity chạy nguyên xi
+4. **Tuỳ biến cao**: Control validator set và governance theo nhu cầu VinaLib
+5. **Validator setup**: 5-10 trusted nodes (libraries, partners, VinaLib team)
 
-Trong tương lai, nếu cần finality nhanh hơn hoặc security cao hơn, VinaLib có thể cân nhắc zkSync Era - nhưng hiện tại Polygon là lựa chọn "sweet spot" (điểm tối ưu) hoàn hảo.
+Xem chi tiết về chiến lược triển khai tại: **[VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)**
 
 ---
 
