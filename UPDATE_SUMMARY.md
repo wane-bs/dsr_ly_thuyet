@@ -1,7 +1,7 @@
 # Bản Cập Nhật Tài Liệu - AVAX Subnet/ndachain với PoA
 
 **Ngày cập nhật:** 2026-02-01  
-**Deployment Target:** AVAX Subnet hoặc ndachain với PoA consensus
+**Deployment Target:** NDAChain (Hạ tầng DID quốc gia) với PoA consensus
 
 ---
 
@@ -136,17 +136,17 @@ MỚI: AVAX Fuji Testnet, ndachain testnet
 
 Trong tất cả các file, cần truyền tải thông điệp nhất quán:
 
-1. **Quyết định mới:** AVAX Subnet hoặc ndachain với PoA consensus
+1. **Quyết định mới:** NDAChain (Hạ tầng DID quốc gia) với PoA consensus
 2. **Lý do:**
-   - Chi phí cực thấp (< $0.01/tx vs $0.001-0.01 trên Polygon)
+   - Bảo mật & Tuân thủ: Tích hợp DID quốc gia
+   - Chi phí cực thấp (< $0.01/tx)
    - Tốc độ cao (< 2s deterministic finality)
-   - Tuỳ biến hoàn toàn (validator set, governance)
    - EVM compatible 100%
 3. **Trade-offs chấp nhận:**
-   - Decentralization thấp hơn (5-20 validators vs 100+)
-   - Permissioned network (phù hợp trusted consortium)
-4. **Testnet:** AVAX Fuji hoặc ndachain testnet
-5. **Mainnet:** AVAX Subnet hoặc ndachain với PoA
+   - Decentralization thấp hơn (PoA trusted validators)
+   - Permissioned network (phù hợp Identity-based services)
+4. **Testnet:** AVAX Fuji Testing & NDAChain Testnet
+5. **Mainnet:** NDAChain Mainnet (PoA)
 
 ---
 
