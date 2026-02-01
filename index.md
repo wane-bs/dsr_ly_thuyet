@@ -10,7 +10,7 @@ Chào mừng đến với kho tri thức nền tảng của dự án **VinaLib**
 Bộ tài liệu này được biên soạn để cung cấp kiến thức từ cơ bản đến nâng cao về các công nghệ cốt lõi: Blockchain, Smart Contracts, IPFS, Chainlink và IoT.
 
 > [!NOTE]
-> **Deployment:** VinaLib là **DApp trên NDAChain** (hạ tầng DID quốc gia) để tối ưu hóa chi phí (< $0.01/tx), tốc độ (< 2s finality). Hiện test trên AVAX Fuji (temporary). Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md).
+> **Deployment:** VinaLib là **DApp trên NDAChain** (hạ tầng DID quốc gia) để tối ưu hóa chi phí (< $0.01/tx), tốc độ (< 2s finality). Hiện test trên local và định hướng kế tiếp là test trên AVAX Fuji (temporary). Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md).
 
 ---
 
