@@ -119,6 +119,7 @@ Layer 1 là blockchain cơ sở, tự thực thi consensus và xử lý toàn b�
 | **Binance Smart Chain (BSC)** | Proof of Staked Authority | ~60-100 | $0.2-1 | ✅ Solidity (EVM) |
 | **Avalanche** | Avalanche Consensus | ~4500 | $0.01-0.5 | ✅ Solidity (EVM) |
 | **Solana** | Proof of History + PoS | ~3000-5000 | $0.00025 | ✅ Rust (SVM) |
+| **AVAX Subnet (PoA)** | Proof of Authority (tuỳ biến) | ~5000+ | < $0.01 | ✅ Solidity (EVM) |
 
 **Đặc điểm Layer 1:**
 - ✅ **Fully Decentralized**: Mọi transaction được validate bởi toàn bộ network
@@ -172,16 +173,22 @@ zkRollups (zkSync, StarkNet):
 
 ---
 
-### 💡 Tại sao VinaLib chọn Deploy trên Layer 2?
+### 💡 Tại sao VinaLib chọn AVAX Subnet/ndachain với PoA?
+
+> [!NOTE]
+> **Quyết định triển khai:** VinaLib sử dụng **AVAX Subnet hoặc ndachain** với cơ chế đồng thuận **Proof of Authority (PoA)** để tối ưu hóa chi phí, tốc độ, và khả năng tuỳ biến governance.
+>
+> Xem chi tiết: [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)
 
 **Quyết định chiến lược:**
 
-| Yếu tố | Ethereum L1 | Polygon L2 (Lựa chọn VinaLib) |
-|--------|-------------|-------------------------------|
-| **Gas Cost** | $5-50/tx | $0.001-0.01/tx |
-| **Tốc độ** | 15s/block | 2s/block |
-| **UX** | ❌ User phải đợi lâu, trả phí cao | ✅ Gần như instant, gần như miễn phí |
-| **Adoption** | Nhỏ (chỉ whales dùng) | Lớn (retail-friendly) |
+| Yếu tố | Ethereum L1 | AVAX Subnet/ndachain (PoA) |
+|--------|-------------|----------------------------|
+| **Gas Cost** | $5-50/tx | < $0.01/tx |
+| **Tốc độ** | 15s/block | < 2s/block (PoA) |
+| **UX** | ❌ User phải đợi lâu, trả phí cao | ✅ Nhanh, chi phí gần như 0 |
+| **Customization** | ❌ Không thể tuỳ biến | ✅ Tuỳ biến governance, consensus |
+| **Consensus** | PoS | PoA (nhanh, hiệu quả) |
 
 **Kịch bản thực tế trong VinaLib:**
 
@@ -195,77 +202,56 @@ Workflow thuê sách trên Ethereum L1:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Total: $65 chỉ để THUÊ MỘT CUỐN SÁCH! ❌
 
-Workflow thuê sách trên Polygon L2:
-1. User approve → Gas: $0.001
-2. Create rental → Gas: $0.002
-3. Policy + escrow → Gas: $0.003
-4. Mint SBT → Gas: $0.001
-5. Emit event → Gas: $0.001
+Workflow thuê sách trê AVAX Subnet/ndachain với PoA:
+1. User approve → Gas: < $0.001
+2. Create rental → Gas: < $0.001
+3. Policy + escrow → Gas: < $0.002
+4. Mint SBT → Gas: < $0.001
+5. Emit event → Gas: < $0.001
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Total: $0.008 cho toàn bộ flow! ✅
+Total: < $0.006 cho toàn bộ flow! ✅
 ```
 
 **Trade-offs được chấp nhận:**
 
-| Aspect | L1 Ethereum | L2 Polygon | VinaLib Accept? |
-|--------|-------------|------------|-----------------|
-| **Decentralization** | ~500k validators | ~100 validators | ✅ Yes (đủ cho use case) |
-| **Security** | Maximum | High (checkpoints to L1) | ✅ Yes (sách không phải DeFi triệu $) |
-| **Composability** | Native với tất cả L1 DeFi | Cần bridge | ✅ Yes (VinaLib là standalone app) |
-| **Finality** | 12-15s (1 block) | 2s soft, 30min hard | ✅ Yes (không cần instant finality tuyệt đối) |
+| Aspect | L1 Ethereum | AVAX Subnet/ndachain (PoA) | VinaLib Accept? |
+|--------|-------------|----------------------------|-----------------|
+| **Decentralization** | ~500k validators | 5-20 trusted validators | ✅ Yes (PoA phù hợp cho trusted consortium) |
+| **Security** | Maximum | High (validators có reputation stake) | ✅ Yes (sách không phải DeFi triệu $) |
+| **Permissionless** | Ai cũng validate được | Chỉ authorized validators | ✅ Yes (trade-off cho tốc độ & cost) |
+| **Finality** | 12-15s probabilistic | < 2s deterministic | ✅ Yes (finality nhanh hơn, rõ ràng hơn) |
+| **Flexibility** | Cố định | Hoàn toàn tuỳ biến | ✅ Yes (điều chỉnh theo nhu cầu VinaLib) |
 
 **Lộ trình Deploy của VinaLib:**
 
 ```
 Phase 1: Development
-├─ Hardhat Local Network (L1 simulation)
+├─ Hardhat Local Network (EVM simulation)
 └─ Gas: FREE (local testing)
 
 Phase 2: Testnet
-├─ Sepolia (Ethereum Testnet) - Testing L1 behavior
-├─ Mumbai (Polygon Testnet) - Testing L2 integration
+├─ AVAX Fuji Testnet - Testing subnet behavior
+├─ hoặc ndachain testnet - Testing custom chain
 └─ Gas: FREE (testnet faucets)
 
-Phase 3: Production (Current target)
-├─ Polygon PoS Mainnet
+Phase 3: Production (Target)
+├─ AVAX Subnet hoặc ndachain Mainnet
 ├─ Reasons:
-│  ✅ EVM 100% compatible (copy-paste code)
-│  ✅ Gas ~1000x rẻ hơn Ethereum
-│  ✅ Ecosystem lớn (Uniswap, Aave, OpenSea đều có trên Polygon)
-│  ✅ Bridge dễ dàng (Polygon PoS Bridge official)
-└─ Future consideration: zkSync Era (nếu cần finality nhanh hơn)
+│  ✅ EVM 100% compatible (code Solidity chạy ngay)
+│  ✅ PoA consensus: Fast, efficient, low cost
+│  ✅ Tuỳ biến governance: Control validator set
+│  ✅ Gas ~1000x+ rẻ hơn Ethereum
+│  ✅ Subnet isolation: Không bị ảnh hưởng traffic khác
+│  ✅ ndachain option: Blockchain riêng 100%, kiểm soát hoàn toàn
+└─ Validator Setup: 5-10 trusted nodes (libraries, partners, VinaLib team)
 ```
 
-**Bridge Mechanism (L1 ↔ L2):**
-
-```
-User muốn move assets từ Ethereum → Polygon:
-
-Step 1: Lock trên L1
-┌──────────────────────────┐
-│ User deposits 100 USDC   │
-│ into Bridge Contract     │
-│ on Ethereum              │
-└──────────┬───────────────┘
-           │
-           ▼
-Step 2: Mint trên L2
-┌──────────────────────────┐
-│ Validators witness lock  │
-│ → Mint 100 USDC          │
-│    on Polygon            │
-└──────────────────────────┘
-
-Reverse (Polygon → Ethereum):
-- Burn on Polygon
-- Wait for checkpoint (~30 min)
-- Unlock on Ethereum
-```
+**Tích hợp và Onboarding:**
 
 **VinaLib không cần Bridge vì:**
-- Toàn bộ ecosystem (BookAsset, SuChinToken, rentals) đều trên Polygon
-- User chỉ cần ETH/MATIC để trả gas (không cần bridge assets phức tạp)
-- Onboarding: User mua MATIC trực tiếp trên CEX → withdraw về Polygon wallet
+- Toàn bộ ecosystem (BookAsset, SuChinToken, rentals) đều trên subnet/ndachain
+- User nhận AVAX hoặc native token để trả gas  
+- Onboarding đơn giản: User connect wallet và nhận gas token từ faucet hoặc buy on CEX
 
 ---
 
@@ -273,27 +259,27 @@ Reverse (Polygon → Ethereum):
 
 **Deployment Cost (VinaLib Full Stack):**
 
-| Contract | Ethereum L1 | Polygon L2 | Savings |
-|----------|-------------|------------|---------|
-| BookAsset (ERC-721) | $150 | $0.15 | 99.9% |
-| BookRental | $200 | $0.20 | 99.9% |
-| PolicyEngine | $180 | $0.18 | 99.9% |
-| RentalAgreementSBT | $120 | $0.12 | 99.9% |
-| SuChinToken (ERC-20) | $100 | $0.10 | 99.9% |
-| VinaLibVault (Chainlink) | $250 | $0.25 | 99.9% |
-| **TOTAL** | **$1000** | **$1** | **99.9%** |
+| Contract | Ethereum L1 | AVAX Subnet/ndachain (PoA) | Savings |
+|----------|-------------|----------------------------|---------|
+| BookAsset (ERC-721) | $150 | < $0.10 | 99.9%+ |
+| BookRental | $200 | < $0.10 | 99.9%+ |
+| PolicyEngine | $180 | < $0.10 | 99.9%+ |
+| RentalAgreementSBT | $120 | < $0.08 | 99.9%+ |
+| SuChinToken (ERC-20) | $100 | < $0.05 | 99.9%+ |
+| VinaLibVault (Chainlink) | $250 | < $0.15 | 99.9%+ |
+| **TOTAL** | **$1000** | **< $0.58** | **99.94%+** |
 
 **Ongoing Operations (per month, 1000 users):**
 
-| Operation | Frequency | L1 Cost | L2 Cost |
-|-----------|-----------|---------|---------|
-| Mint BookAsset NFT | 100/month | $1200 | $1.2 |
-| Create Rental | 500/month | $7500 | $7.5 |
-| Return Book | 500/month | $5000 | $5 |
-| Mint SBT | 500/month | $6000 | $6 |
-| **TOTAL** | - | **$19,700/month** | **$19.7/month** |
+| Operation | Frequency | L1 Cost | Subnet/ndachain Cost |
+|-----------|-----------|---------|-----------------------|
+| Mint BookAsset NFT | 100/month | $1200 | < $1 |
+| Create Rental | 500/month | $7500 | < $3 |
+| Return Book | 500/month | $5000 | < $3 |
+| Mint SBT | 500/month | $6000 | < $2.5 |
+| **TOTAL** | - | **$19,700/month** | **< $9.5/month** |
 
-**Kết luận:** Polygon L2 cho phép VinaLib hoạt động sustainable với chi phí gần như bằng 0, trong khi vẫn giữ được security và composability của Ethereum.
+**Kết luận:** AVAX Subnet hoặc ndachain với PoA consensus cho phép VinaLib hoạt động hoàn toàn sustainable với chi phí gần như bằng 0, đồng thời giữ được EVM compatibility và có khả năng tuỳ biến governance theo nhu cầu riêng của dự án.
 
 ---
 
