@@ -18,7 +18,10 @@ title: Chainlink Oracle
 | [IPFS](./1-IPFS.md) | Functions có thể upload/fetch từ IPFS |
 
 > [!NOTE]
-> **VinaLib Deployment:** VinaLib sẽ triển khai trên **AVAX Subnet hoặc ndachain với PoA consensus**. Chainlink services được đề cập trong tài liệu này hỗ trợ nhiều blockchain networks (bao gồm Ethereum, Polygon, Avalanche, và các chains tương thích EVM khác). Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md) để biết chi tiết.
+> **VinaLib Deployment:** VinaLib là **DApp trên NDAChain** (hạ tầng DID quốc gia).  
+> **Hiện tại**: Testing trên AVAX Fuji Testnet (temporary)  
+> **Target**: NDAChain Mainnet (chờ platform mở public)  
+> Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md) để biết chi tiết.
 
 ---
 
