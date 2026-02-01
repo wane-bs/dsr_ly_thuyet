@@ -127,7 +127,7 @@ Hãy tưởng tượng bạn muốn thuê một cuốn sách quý từ một ng�
 
 ### EVM và Solidity - Ngôn ngữ và Máy Thực thi
 
-**Solidity** là ngôn ngữ lập trình được  kế riêng để viết Smart Contract. Nếu Smart Contract là một công thức nấu ăn, thì Solidity là ngôn ngữ mà đầu bếp dùng để viết ra công thức đó.
+**Solidity** là ngôn ngữ lập trình được kế riêng để viết Smart Contract. Nếu Smart Contract là một công thức nấu ăn, thì Solidity là ngôn ngữ mà đầu bếp dùng để viết ra công thức đó.
 
 **EVM** (Ethereum Virtual Machine) là "máy tính ảo" thực thi các Smart Contract. Bạn có thể hình dung EVM như một dàn bếp được sao chép ra hàng nghìn bản giống hệt nhau, đặt tại nhà của mỗi node trên toàn thế giới. Khi có một lệnh nấu ăn (gọi Smart Contract), tất cả các bếp đều nấu cùng một công thức và phải cho ra cùng một món ăn. Đặc tính này gọi là **Deterministic** (tính tất định), đảm bảo rằng dù bạn hỏi bất kỳ node nào, bạn cũng nhận được cùng một kết quả.
 
@@ -276,13 +276,16 @@ Quy trình phát triển tiêu chuẩn bao gồm: phát triển và thử nghi�
 ### Layer 1 và AVAX Subnet với PoA - Lựa chọn Triển khai
 
 > [!NOTE]
-> **Deployment Target:** VinaLib triển khai trên **AVAX Subnet hoặc ndachain** với cơ chế đồng thuận **Proof of Authority (PoA)**. Xem chi tiết tại [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)
+> **Deployment Target:** VinaLib là **DApp trên NDAChain** (hạ tầng DID quốc gia).  
+> **Hiện tại**: Testing trên AVAX Fuji Testnet (temporary)  
+> **Target**: NDAChain Mainnet (chờ platform mở public)  
+> Xem chi tiết: [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md)
 
 Một câu hỏi quan trọng khi triển khai ứng dụng blockchain là: nên deploy lên đâu? **Layer 1** (Ethereum mainnet) hay **Subnet riêng với PoA consensus**?
 
 **Layer 1** giống như đường cao tốc chính - an toàn và đáng tin cậy nhất, nhưng đông đúc và phí cao. Khi mạng lưới đông, một giao dịch đơn giản có thể tốn từ $5 đến $50 chỉ để trả phí gas. Workflow thuê một cuốn sách trên VinaLib (approve token, tạo rental, lock tiền cọc, mint SBT) có thể tốn lên đến $65 chỉ cho phí gas!
 
-**AVAX Subnet hoặc ndachain với PoA** (lựa chọn của VinaLib) là giải pháp tối ưu kết hợp tốc độ, chi phí thấp, và khả năng tuỳ biến. Đây không phải là Layer 2, mà là một blockchain riêng hoàn toàn có thể tuỳ biến. VinaLib có thể chọn cơ chế đồng thuận riêng (**Proof of Authority - PoA**), validator set riêng, và governance rules riêng. Cùng workflow thuê sách chỉ tốn < $0.006 - rẻ hơn gấp 10,000+ lần!
+**NDAChain với PoA** (target platform của VinaLib) là hạ tầng DID quốc gia kết hợp tốc độ, chi phí thấp, và bảo mật cao. NDAChain sử dụng **Proof of Authority (PoA)** với validators được chính phủ ủy quyền. Workflow thuê sách trên NDAChain chỉ tốn < $0.01 - rẻ hơn gấp 10,000+ lần so với Ethereum L1!
 
 **Proof of Authority (PoA) là gì?**
 
@@ -303,7 +306,7 @@ Workflow thuê sách trên Ethereum L1:
 - Approve + Create rental + Lock deposit + Mint SBT
 - Total: $57 ❌
 
-Workflow thuê sách trên AVAX Subnet/ndachain (PoA):
+Workflow thuê sách trên NDAChain (PoA):
 - Approve + Create rental + Lock deposit + Mint SBT  
 - Total: < $0.005 ✅ (rẻ hơn 11,000+ lần!)
 ```
@@ -318,14 +321,14 @@ Workflow thuê sách trên AVAX Subnet/ndachain (PoA):
 
 **Onboarding đơn giản:**
 
-Toàn bộ ecosystem (sách, token thanh toán, contracts) đều trên AVAX Subnet/ndachain. User chỉ cần:
+Toàn bộ ecosystem (sách, token thanh toán, contracts) sẽ deploy trên NDAChain. User chỉ cần:
 - Connect wallet (MetaMask hoặc tương tự)
 - Nhận gas token từ faucet (testnet) hoặc mua AVAX trên sàn (mainnet)
 - Bắt đầu sử dụng - không cần bridge phức tạp!
 
 **Lộ trình Deploy của VinaLib:**
 
-Hiện tại, VinaLib đang ở giai đoạn development trên Hardhat (mạng local giả lập). Bước tiếp theo là testing trên **AVAX Fuji Testnet** hoặc **ndachain testnet** để đảm bảo mọi thứ hoạt động đúng. Khi sẵn sàng cho production, VinaLib sẽ deploy lên **AVAX Subnet hoặc ndachain Mainnet với PoA consensus** vì các lý do chính:
+Hiện tại, VinaLib đang ở giai đoạn development trên Hardhat (mạng local giả lập). Bước tiếp theo là testing trên **AVAX Fuji Testnet** (temporary, vì NDAChain chưa mở public testnet access). Khi NDAChain mở public access, VinaLib sẽ migrate lên **NDAChain Mainnet** vì các lý do chính:
 
 1. **Chi phí cực kỳ sustainable**: < $0.58 cho deployment toàn bộ hệ thống thay vì $1000, và chỉ < $9.5/tháng cho 1000 users thay vì $19,700
 2. **Trải nghiệm người dùng tốt nhất**: Giao dịch xác nhận trong < 2 giây với deterministic finality, phí gần như bằng 0
@@ -409,11 +412,9 @@ VinaLib sử dụng Tuya platform cho smart locks. Tuya cung cấp cloud API đ�
 
 - `0-Kien-truc-Tong-quan.md` - Sơ đồ chi tiết, glossary đầy đủ
 - `1-IPFS.md` - CIDv0/v1, gateway implementation, pinning services
-- `2-Smart-Contracts-Co-ban.md` - Workflow VinaLib chi tiết (BookAsset, BookRental, PolicyEngine
-
-)
+- `2-Smart-Contracts-Co-ban.md` - Workflow VinaLib chi tiết (BookAsset, BookRental, PolicyEngine)
 - `3-Smart-Contracts-Nang-cao.md` - Design patterns, dependency analysis, security best practices
 - `4-Chainlink.md` - Request/response lifecycle, subscription model, secrets management
 - `5-IoT.md` - Tuya integration, physical access control, data integrity patterns
 
-*Cập nhật lần cuối: 2026-01-31*
+*Cập nhật lần cuối: 2026-02-01*
