@@ -101,7 +101,7 @@ VinaLib đại diện cho một artifact design science—cụ thể là một *
 - **Nền kinh tế Token**: SuChinToken (ERC-20) cho thanh toán
 
 **Stack Công nghệ**:
-- Blockchain: Ethereum/Polygon (Layer 2)
+- Blockchain: AVAX Subnet hoặc ndachain với PoA consensus
 - Ngôn ngữ Smart Contract: Solidity
 - Framework Phát triển: Hardhat
 - Frontend: React/Web3.js
@@ -233,7 +233,7 @@ Artifact sẽ được xác thực thông qua nhiều phương pháp:
 
 ### 7.1 Kiểm thử Chức năng
 - Unit tests cho smart contracts (bộ test Hardhat)
-- Integration testing trên testnets (Sepolia, Polygon Mumbai)
+- Integration testing trên testnets (AVAX Fuji, ndachain testnet)
 - Kiểm toán bảo mật (phân tích tĩnh + đánh giá thủ công)
 
 ### 7.2 Đánh giá Hiệu suất
