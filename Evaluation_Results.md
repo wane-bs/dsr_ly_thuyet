@@ -39,7 +39,7 @@ Giai đoạn 1: Giai đoạn Phát triển (HIỆN TẠI - Q1 2026)
 └─ CODE REVIEW → Chuẩn bị kiểm toán bảo mật
 
 Giai đoạn 2: Giai đoạn Testnet (Q2 2026)
-├─ Triển khai: Sepolia (Ethereum L1), Mumbai (Polygon L2)
+├─ Triển khai: AVAX Fuji Testnet, ndachain testnet
 ├─ Integration testing (Chainlink, IPFS gateways)
 ├─ Kiểm thử người dùng Beta (20-50 người tham gia)
 └─ LẶP LẠI → Sửa lỗi, cải thiện UX
@@ -112,7 +112,7 @@ Mỗi mục tiêu từ [Solution_Objectives.md](./Solution_Objectives.md) có c�
 
 | KPI | Mục tiêu | Trạng thái Hiện tại | Nguồn Dữ liệu |
 |-----|----------|---------------------|---------------|
-| KPI-4.1: Chi phí gas mỗi lần thuê (Polygon) | < $0.01 | ⏳ **Chờ mainnet** | Phân tích biên lai giao dịch |
+| KPI-4.1: Chi phí gas mỗi lần thuê (AVAX Subnet/ndachain) | < $0.01 | ⏳ **Chờ mainnet** | Phân tích biên lai giao dịch |
 | KPI-4.2: Tổng giảm chi phí | ≥ 50% vs. truyền thống | ⏳ **Chờ nghiên cứu so sánh** | Mô hình TCO |
 | KPI-4.3: Thời gian lao động admin | < 5 phút/giao dịch | ⏳ **Chờ dữ liệu pilot** | Nghiên cứu thời gian-động tác |
 | KPI-4.4: Hiệu quả vốn | Thanh toán ngay lập tức | ⏳ **Chờ kiểm toán smart contract** | Thời gian giải phóng ký quỹ |
@@ -199,7 +199,7 @@ it("Should automatically return deposit when book returned on time", async () =>
 **Kế hoạch Đo lường**:
 ```
 Thiết lập:
-- Triển khai contracts lên Polygon Mumbai testnet
+- Triển khai contracts lên AVAX Fuji Testnet hoặc ndachain testnet
 - Tạo 1,000 ví người dùng test với tài khoản được tài trợ
 - 100 tài sản sách được mint trước
 
@@ -214,9 +214,9 @@ Chỉ số:
 - Tỷ lệ giao dịch thất bại
 ```
 
-**Kết quả Dự kiến** (dựa trên thông số kỹ thuật Polygon):
+**Kết quả Dự kiến** (dựa trên thông số kỹ thuật AVAX Subnet với PoA):
 
-| Chỉ số | Polygon Mumbai (Testnet) | Polygon Mainnet (Dự đoán) |
+| Chỉ số | AVAX Fuji/ndachain Testnet | AVAX Subnet/ndachain Mainnet (Dự đoán) |
 |--------|--------------------------|---------------------------|
 | Thời gian khối | ~2 giây | ~2 giây |
 | TPS (max mạng) | ~7,000 | ~7,000 |
@@ -231,7 +231,7 @@ Chỉ số:
 
 **Các Loại Giao dịch**:
 
-| Hoạt động | Gas Ước tính (Polygon) | Chi phí @ 30 Gwei, MATIC=$0.80 | Trạng thái |
+| Hoạt động | Gas Ước tính (AVAX Subnet PoA) | Chi phí @ 20 Gwei, AVAX=$30 | Trạng thái |
 |-----------|------------------------|--------------------------------|------------|
 | Mint BookAsset NFT | 120,000 | $0.0029 | ⏳ Chờ testnet |
 | Tạo Rental (approve + lock) | 180,000 | $0.0043 | ⏳ Chờ testnet |
@@ -258,7 +258,7 @@ Bước 2: Xử lý on-chain
   ├─ Đánh giá PolicyEngine: ~60,000 gas
   ├─ Khóa deposit (ERC-20 transfer): ~45,000 gas
   ├─ Tạo hồ sơ rental: ~75,000 gas
-  └─ Xác nhận khối: 2-4 giây (Polygon)
+  └─ Xác nhận khối: < 2 giây (AVAX Subnet PoA)
 
 Bước 3: Phát ra sự kiện và indexing
   ├─ Sự kiện được phát hiện bởi backend: 1-2 giây
@@ -420,7 +420,7 @@ Giải quyết: Thêm modifier ReentrancyGuard từ OpenZeppelin
 ### 4.3 So sánh Chi phí Mô phỏng
 
 **Tham số Mô phỏng**:
-- Giá gas: 30 Gwei (điển hình Polygon)
+- Giá gas: 20 Gwei (điển hình AVAX Subnet với PoA, có thể thấp hơn)
 - Giá MATIC: $0.80
 - Khối lượng giao dịch: 1,000 lần thuê/tháng
 
@@ -445,7 +445,7 @@ Giải quyết: Thêm modifier ReentrancyGuard từ OpenZeppelin
 ### 5.1 Các Mối đe dọa Tính hợp lệ Đánh giá
 
 **Tính hợp lệ Nội bộ**:
-- ⚠️ Môi trường test (Hardhat local) khác với production (Polygon mainnet)
+- ⚠️ Môi trường test (Hardhat local) khác với production (AVAX Subnet/ndachain mainnet)
 - ⚠️ Người dùng mô phỏng có thể không đại diện cho hành vi người dùng thực
 - ⚠️ Mẫu nhỏ trong nghiên cứu pilot có thể hạn chế sức mạnh thống kê
 
@@ -497,7 +497,7 @@ Giải quyết: Thêm modifier ReentrancyGuard từ OpenZeppelin
 └─ ⏳ Nghiên cứu khả năng sử dụng (SUS, NPS)
 
 2026 Q3
-├─ ⏳ Triển khai mainnet (Polygon)
+├─ ⏳ Triển khai mainnet (AVAX Subnet/ndachain với PoA)
 ├─ ⏳ Khởi động nghiên cứu pilot (đối tác thư viện)
 ├─ ⏳ Phân tích so sánh (truyền thống vs DApp)
 └─ ⏳ Kiểm thử tích hợp IoT thế giới thực
@@ -538,7 +538,7 @@ Giải quyết: Thêm modifier ReentrancyGuard từ OpenZeppelin
 #### Dữ liệu Chi phí Gas
 ```json
 {
-  "network": "Polygon Mumbai",
+  "network": "AVAX Fuji Testnet",
   "date": "2026-04-15",
   "transactions": [
     {
