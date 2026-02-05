@@ -44,6 +44,9 @@ Nếu đây là lần đầu tiên bạn tiếp cận, hãy bắt đầu theo l�
 2.  **[0. Kiến trúc Tổng quan](./0-Kien-truc-Tong-quan.md)**
     *   *Dành cho:* Dev, Architect.
     *   *Nội dung:* Sơ đồ hệ thống, luồng dữ liệu, thuật ngữ kỹ thuật.
+  
+3.  **[Lưu đồ trực quan hóa](https://wane-bs.github.io/so-do/)**
+    *   *Nội dung:* Sơ đồ trực quan hóa cấu trúc và luồng dữ liệu.
 
 ---
 
