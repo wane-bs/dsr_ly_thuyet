@@ -12,6 +12,7 @@ Bộ tài liệu này được biên soạn để cung cấp kiến thức từ 
 Đây là tài liệu nghiên cứu sử dụng cho mục đích học thuật thuộc về tác giả dưới sự kiểm soát của Trường Đại học Công Thương Tp.HCM. Mọi hành vi sử dụng tài liệu này bất kể mục đích đề nghị liên hệ lại cho tác giả qua gmail: trunghieuwane@gmail.com
 
 > [!NOTE]
+> **Bấm vào các dòng chữ màu xanh dương để được dẫn tới bài viết cụ thể**
 > **Deployment:** VinaLib là **DApp trên NDAChain** (hạ tầng DID quốc gia) để tối ưu hóa chi phí (< $0.01/tx), tốc độ (< 2s finality). Hiện test trên local và định hướng kế tiếp là test trên AVAX Fuji (temporary). Xem [VinaLib Deployment Strategy](./VinaLib-Deployment-Strategy.md).
 
 ---
