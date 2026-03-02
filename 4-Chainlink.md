@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Chainlink Oracle
 ---
@@ -1137,50 +1137,19 @@ Smart contracts không thể tự động chạy code theo thời gian hoặc đ
 
 Đây là "read-only" function mà Keepers gọi liên tục (mỗi vài blocks) để hỏi: "Có việc gì cần làm không?"
 
-**Hiện tại (Placeholder logic):**
-- Contract luôn trả về `upkeepNeeded = true`
-- Chỉ để test xem Keepers có hoạt động không
-- `performData` = "Do something" (dummy data)
-
-**Tương lai (Production logic sẽ là):**
-Contract sẽ check các điều kiện thực tế:
-- Có rental nào quá hạn chưa trả không?
-  - Query activeRentals mapping
-  - So sánh `block.timestamp` với `rental.dueDate`
-  - Nếu có → Return `upkeepNeeded = true` + danh sách rentalIDs
-- Có reward pool nào cần distribute không?
-  - Check lastDistributionTime
-  - Nếu đã 24h → Return true
-- Có book nào cần update status không?
-  - Check pending verifications queue
-  - Nếu queue.length > 0 → Return true
+**Hiện tại (V3.1 Production logic):**
+Contract sẽ duyệt qua mảng `activeRentalBookIds` để kiểm tra các điều kiện thực tế:
+- Có rental nào mà người dùng yêu cầu trả (`ReturnRequested`) không? (upkeepType 0)
+- Có rental nào chưa trả đổi thành trạng thái quá hạn (`dueDate < block.timestamp`) không? (upkeepType 1)
+- Nếu có → Return `upkeepNeeded = true` + `performData` chứa `bookId` và `upkeepType`.
 
 **performUpkeep() Function:**
 
 Khi `checkUpkeep` trả về true, Keepers tự động gọi function này để thực thi action.
 
-**Hiện tại:**
-- Chỉ lưu `performData` vào state variable `lastUpkeep Data`
-- Placeholder để verify Keepers có thể call được
-
-**Tương lai sẽ implement:**
-- **Auto-liquidate late rentals**:
-  - Decode performData để lấy list rentalIDs quá hạn
-  - Loop qua từng rental:
-    - Calculate late fee
-    - Deduct từ deposit
-    - Update status → LATE
-    - Emit event để notify user và lender
-  
-- **Auto-distribute rewards**:
-  - Calculate rewards cho mỗi lender based on rental income
-  - Transfer tokens
-  - Update lastDistributionTime
-
-- **Auto-update trust scores**:
-  - Query users with pending score updates
-  - Recalculate based on recent activities
-  - Update on-chain records
+**Hiện tại (V3.1 Production logic):**
+- Decode `bookId` và `upkeepType` từ `performData`.
+- Nếu `upkeepType == 1` (Quá hạn timeout): Tự động xóa quyền truy cập (clear user rights trên BookAsset), cập nhật trạng thái sách (không bị hư hỏng), và đóng/hoàn tất hợp đồng thuê (`RentalStatus.Concluded`) hoàn toàn tự động, phát đi Event `RentalConcluded` để Worker Catch.
 
 **Tại sao dùng Automation thay vì Admin manual trigger?**
 
@@ -1333,31 +1302,20 @@ Khi ready for testnet:
 
 ### 🚀 Roadmap & Next Steps
 
-**Phase 1: Enhanced Automation Logic** (Planned Q2 2024)
+**Phase 1: Enhanced Automation Logic** (Đã hoàn thành ở V3.1)
 
 Thay thế placeholder trong `checkUpkeep()` bằng logic thực tế:
 
-**Task 1: Late Rental Detection**
-- Query mapping `activeRentals` để tìm rentals có `dueDate < block.timestamp`
-- Build array các rentalIDs quá hạn
-- Return `upkeepNeeded = true` nếu array không rỗng
-- Encode rentalIDs vào `performData`
+**Task 1: Late Rental Detection** (Hoàn thành)
+- Duyệt qua `activeRentalBookIds` tìm các hợp đồng Active bị timeout.
+- Return `upkeepNeeded = true`.
+- Encode `bookId` vào `performData`.
 
-**Task 2: Auto-Liquidation**
-- `performUpkeep()` decode rentalIDs từ performData
-- Loop qua từng rental:
-  - Calculate days late: `(now - dueDate) / 86400`
-  - Calculate penalty: `daysLate × penaltyRate`
-  - Deduct từ deposit
-  - Transfer remaining deposit về user
-  - Update rental status → COMPLETED_LATE
-  - Update user trust score (giảm điểm)
-
-**Task 3: Reward Distribution**
-- Check xem đã 24h kể từ lastDistribution chưa
-- Nếu có → Calculate rewards cho mỗi lender based on rental income
-- Auto-transfer tokens
-- Update lastDistributionTime
+**Task 2: Auto-Liquidation** (Hoàn thành)
+- `performUpkeep()` decode bookIDs.
+- Xóa bỏ quyền lợi NFT.
+- Update rental status → `Concluded`.
+- Phát đi các event on-chain tương ứng.
 
 **Phase 2: External Data Verification** (Planned Q3 2024)
 

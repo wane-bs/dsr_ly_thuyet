@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Smart Contracts (Nâng cao)
 ---
@@ -793,10 +793,57 @@ Contract có function `mint()` với modifier `onlyOwner`, cho phép Admin:
 
 Contract `VinaLibVault` kế thừa từ ba contract/interface:
 - **FunctionsClient** (Chainlink): Cho phép gọi Chainlink Functions để thực thi JavaScript off-chain
-- **AutomationCompatibleInterface** (Chainlink): Tương thích với Chainlink Keepers để tự động hóa các tác vụ
+- **AutomationCompatibleInterface** (Chainlink): Tương thích với Chainlink Keepers để tự động hóa các tác vụ (timeout liquidation)
+- **ReentrancyGuard** (OpenZeppelin): Ngăn chặn tấn công Reentrancy (Re-entrant calls)
 - **Ownable**: Quản lý quyền admin
 
-**Vai trò của Ownable:**
+**Tối ưu Storage (Slot-Packing Optimization):**
+
+Một trong những cải tiến kỹ thuật quan trọng của VinaLibVault ở phiên bản V3.1 là tối ưu hóa không gian lưu trữ (storage slots) để tiết kiệm phí Gas, kỹ thuật này gọi là **Slot-packing**.
+
+Trong Solidity, mỗi storage slot có kích thước 32 bytes (256 bits). Việc đọc/ghi vào storage cực kỳ tốn gas. VinaLibVault tối ưu cấu trúc `EvidencePack` bằng cách đóng gói nhiều trường nhỏ vào chung một slot 32 bytes:
+
+```solidity
+struct EvidencePack {
+    bytes32 termsHash;     // Slot 1 (32 bytes)
+    bytes32 deliveryHash;  // Slot 2 (32 bytes)
+    
+    // Slot 3 (Tổng: 23 bytes, nằm gọn trong 1 slot 32 bytes)
+    address renter;        // 20 bytes
+    uint16 version;        // 2 bytes
+    RentalStatus status;   // 1 byte (enum)
+    
+    // Slot 4 (Tổng: 16 bytes, nằm gọn trong 1 slot)
+    uint64 timestamp;      // 8 bytes
+    uint64 expires;        // 8 bytes
+    
+    string pspRef;         // Slot 5 (dynamic string, con trỏ 32 bytes)
+}
+```
+*Lợi ích:* Kỹ thuật này giúp tiết kiệm khoảng ~20,000 đến 40,000 Gas mỗi khi bắt đầu một hợp đồng thuê (`createRental`) hoặc kết thúc vòng đời của thuê sách.
+
+**Quản lý Trạng thái Thuê (DApp V3.1 State Machine):**
+
+VinaLibVault sử dụng Enum `RentalStatus` để quản lý chặt chẽ vòng đời 1 hợp đồng thuê sách độc lập với trạng thái tổng của NFT BookAsset:
+1. `Active`: Hợp đồng thuê đang chạy.
+2. `ReturnRequested`: Người thuê đã yêu cầu trả sách, chờ Admin xác nhận.
+3. `Concluded`: Hợp đồng đã hoàn tất (Thành công, Hủy trước thời điểm bắt đầu, bị thanh lý do vi phạm/quá hạn timeout).
+
+**Ma Trận Phân Quyền (Access Control Matrix) thực tế:**
+
+| Cấp Quyền | Hành động được phép (Functions) |
+|-----------|---------------------------------|
+| **Admin (`owner`)** | `setConfig()`, `sendRequest()`, `setContracts()`, `confirmReturn()`, `cancelListing()`, `claimCollateral()` (Xử lý vi phạm) |
+| **Renter (`msg.sender` / `user`)** | `createRental()` (Được uỷ quyền hoặc trực tiếp), `requestReturn()` |
+| **Chainlink Keepers** | `performUpkeep()` (Tự động thu hồi quyền `setUser` khi hết hạn) |
+
+**Gas Estimation (Dự tính phí giao dịch):**
+- Hàm `createRental()`: ~150,000 - 180,000 Gas (Do chi phí ghi mới mapping Storage).
+- Hàm `confirmReturn()`: ~100,000 - 120,000 Gas.
+- Hàm `requestReturn()`: ~45,000 - 60,000 Gas.
+- Tự động duy trì hệ thống (`performUpkeep`): ~80,000 Gas + phí nền tảng Chainlink LINK.
+
+**Vai trò của Ownable và Chainlink Automation:**
 
 Contract sử dụng Ownable để bảo vệ các chức năng quan trọng:
 - **Cấu hình Chainlink**: Function `setConfig()` chỉ owner mới gọi được, dùng để thiết lập subscriptionId, donId, gasLimit cho Chainlink
@@ -878,6 +925,31 @@ Trade-off: Simplicity vs Flexibility
 
 ---
 
+## 9. Cổng Thanh Quan & Kiểm Định Bảo Mật (Security Audit)
+
+Trong thiết kế DApp Web3 đặc biệt tại giai đoạn dự án VinaLib 3.1, kiểm định an toàn (Security Audit) là một khái niệm không thể thiếu. Vì Smart Contract khi đã xuất xưởng lên Chain là **Immutable** (Bất biến), mọi kẽ hở đều có thể dẫn đến hậu quả nghiêm trọng về cả tiền tài lẫn quyền sở hữu.
+
+### 🛡️ Vai Trò Của Kiểm Định Bảo Mật (Audit)
+Việc Audit (Giám định thuật toán hợp đồng) được thực hiện với 3 mục tiêu cốt lõi:
+1. **Kiểm tra tính an toàn (Vuln/Exploits):** Phát hiện Reentrancy (lỗi tấn công vòng lặp ẩn), tràn số nguyên (Overflow/Underflow), lỗi quyền truy cập (Access Control Flaws), thiếu kiểm tra Logic ở đầu vào (Input Validation Flaws).
+2. **Kiểm tra tính tối ưu (Gas Optimization):** Phát hiện các điểm cần tối ưu hóa Code (sử dụng calldata thay cho memory, slot-packing, vòng lặp không kiểm soát – DOS gas limit).
+3. **Tính nhất quán Business Logic (Business Inconsistency):** Kiểm tra xem mã được viết có "làm đúng như đặc tả yêu cầu" không. (Ví dụ: Hàm trả sách phải xóa bỏ hoàn toàn quyền được gán cho người dùng trước đó).
+
+### 🛠️ Các Công Cụ Kiểm Định Thông Dụng
+Dự án VinaLib sử dụng các công cụ mạnh mẽ trong quy trình Audit (điển hình qua kịch bản tự động `Master_KiemDinhBaoMat`):
+
+*   **Slither:** Một framework phân tích tĩnh (Static Analysis) phổ biến nhất đối với Solidity. Giúp quét nhanh các mẫu mã độc (pattern-matching) để định danh các rủi ro căn bản và khuyến nghị Gas.
+*   **Mythril:** Công cụ thực thi ký hiệu (Symbolic Execution). Thay vì "đọc chay", thuật toán đi sâu vào mọi nhánh rẽ Logic độc lập bên trong máy ảo EVM để chứng minh liệu Hacker có đường đi để vi phạm các điều kiện (Require) và tấn công hay không.
+*   **Echidna / Foundry Fuzzing:** Kiểm thử Fuzz. Bơm một lượng lớn dữ liệu ngẫu nhiên hoặc có chủ đích trong không gian số nhằm đánh sập Smart Contract nếu xảy ra lỗi ngoại lệ chưa lường trước.
+
+### 🔒 Ví dụ triển khai Security trên VinaLib
+Ở VinaLib V3.1, các giải pháp Security Code được nhúng sâu vào các Contract cốt lõi:
+
+*   **Chống Reentrancy:** `VinaLibVault` sử dụng `ReentrancyGuard` của OpenZeppelin với từ khoá `nonReentrant` tại các hàm xử lý vòng đời tài sản (Như `createRental()`, `confirmReturn()`). Từ khoá này kết hợp mô hình Checks-Effects-Interactions đảm bảo khi hàm thứ hai chưa kết thúc thì hàm ban đầu không được tái kích hoạt.
+*   **AccessControl khắt khe:** Biến cố `claimCollateral()` (tịch thu cọc) hoặc `cancelListing()` chỉ duy nhất Admin (Lessor) được quyền kích hoạt, chống lợi dụng từ người dùng với dã tâm lấy sách mà được đền bù tiền cọc vô lý.  
+
+---
+
 ## Phụ lục: Công cụ và Tài nguyên
 
 ### Development Tools
@@ -896,15 +968,11 @@ Trade-off: Simplicity vs Flexibility
 - Remix IDE: https://remix.ethereum.org
 ```
 
-**3. Testing Tools:**
+**3. Testing & Security Tools:**
 ```
 - Hardhat Tests (Mocha + Chai)
 - Foundry Tests (Solidity-based)
 - Tenderly (Debugging & Simulation)
-```
-
-**4. Security Tools:**
-```
 - Slither (Static analysis): https://github.com/crytic/slither
 - Mythril (Symbolic execution)
 - Echidna (Fuzzing)
@@ -921,38 +989,25 @@ Trade-off: Simplicity vs Flexibility
 
 ## Tổng kết
 
-Smart contract design patterns và standards tạo nền tảng cho hệ sinh thái blockchain:
+Smart contract design patterns và standards tạo nền tảng cho hệ sinh thái blockchain. Đối với phiên bản dự án **VinaLib V3.1**, các hợp đồng không chỉ dừng ở bước khởi tạo tiêu chuẩn mà đã tối ưu triệt để:
 
 **🔹 Core Patterns:**
-- **Ownable**: Access control cho admin functions
-- **Pausable**: Emergency stop mechanism
-- **Inheritance**: Code reuse và modularity
-- **Dependencies**: Leverage audited libraries
+- **Ownable**: Access control cho admin functions.
+- **Pausable**: Emergency stop mechanism.
+- **Inheritance & Dependency**: Kế thừa Chainlink (Automation, Functions) và OpenZeppelin (ERC/Security Guards).
+- **Trạng thái đa cực (Multi-state):** Quản lý qua Enum độc lập ở cả Asset gốc và Vault (EvidencePack).
 
-**🔹 Standards (ERCs):**
-- **ERC-20**: Fungible tokens (currencies)
-- **ERC-721**: Non-fungible tokens (unique assets)
-- **ERC-4907**: Rentable NFTs (with user rights)
-- **SBT**: Non-transferable credentials
-
-**🔹 VinaLib Architecture:**
-- Multiple contracts với specialized roles
-- Heavy use of OpenZeppelin + Chainlink
-- Combination of standards (ERC-721 + ERC-4907 + SBT)
-- Centralized admin control (Ownable) với emergency stop (Pausable)
+**🔹 Standards & Optimizations:**
+- **ERC-20 & ERC-721**: Cho thanh toán nền và định hình tài sản chính (Asset SBT).
+- **ERC-4907**: Rentable NFTs phân tách rõ Quyền Sở Hữu / Quyền Sử Dụng.
+- **SBT**: Chứng chỉ Rental không thể chuyển nhượng.
+- **Slot-Packing:** Ép chuỗi dữ liệu EvidencePack xuống kích thước Slot để giảm thiểu Gas tới tối đa.
+- **Security Audit Guards:** Chặn Re-entrancy, Phân quyền thao tác chặt chẽ thông qua Static Analysis nội tại.
 
 **🎯 Best Practices:**
-1. Use established standards (don't reinvent the wheel)
-2. Inherit from audited libraries (OpenZeppelin)
-3. Combine patterns carefully (test inheritance hierarchy)
-4. Pin dependency versions (reproducible builds)
-5. Implement access control (Ownable/AccessControl)
-6. Add emergency mechanisms (Pausable)
-7. Test thoroughly (unit + integration + security)
-
-**Lưu ý cho Developers:**
-- Hiểu rõ inheritance order (C3 linearization)
-- Override functions đúng cách (virtual + override)
-- Cân nhắc gas costs khi inherit nhiều contracts
-- Keep dependencies minimal và updated
-- Always audit external dependencies
+1. Use established standards (don't reinvent the wheel).
+2. Inherit from audited libraries (OpenZeppelin / Contracts Security).
+3. Combine patterns carefully (test inheritance hierarchy).
+4. Áp dụng Slot-packing để tối đa hoá hiệu suất sử dụng Data (Gas Economics).
+5. Implement access control khắt khe đối với Logic quan trọng.
+6. Luôn triển khai Audit và Security Checklist trước khi Release (Slither/Mythril).

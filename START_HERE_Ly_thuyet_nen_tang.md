@@ -1,4 +1,4 @@
----
+﻿---
 layout: default
 title: Lý thuyết Nền tảng
 ---
